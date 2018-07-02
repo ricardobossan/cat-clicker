@@ -1,7 +1,15 @@
-/*TODO:
-
-* lesson: "https://classroom.udacity.com/nanodegrees/nd001/parts/e4e4c31c-2348-4382-826f-caac197d6f5f/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34408790480923"
-** from what I got, two cat pictures, with their names displayed above each. Think I ll use flexbox or grid to display them responsively, and add their name with figcaptions, but adding the <figcaptions> before the <img> tags
+/*
+* @file this file holds the logic for implementing a cat clicker page, where, once you click in a catr picture, a counter above it increments the number of clicks on that picture by 1.
+* @author Ricardo Bossan (ricardobossan@gmail.com)
+*
+* lesson: FEND Nanodegree / Chapter 4: Front-End Applications / Lesson 1: Changing Expectations
+ "https://classroom.udacity.com/nanodegrees/nd001/parts/e4e4c31c-2348-4382-826f-caac197d6f5f/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34408790480923"
+*
+* @todo
+*
+* from what I got, two cat pictures, with their names displayed above each. Think I ll use flexbox or grid to display them responsively, and add their name with figcaptions, but adding the <figcaptions> before the <img> tags
+	* GIT: create a new branch "tdd", and remake the code on Test Driven Development, for learning/training it
+		* use the "console.log"s below as tests (describes and its)
 */
 const generate = (() => {
 	const domBody = document.querySelector('body');
@@ -19,9 +27,6 @@ const generate = (() => {
 	console.log(mainDiv);
 	mainDiv.setAttribute("style", "display: flex; flex-wrap: wrap; text-align: center; margin-top: 10%");
 	mainDiv.setAttribute("ID", "mainID");
-/*	const cat1FigureDom = document.querySelector('#cat1FigureID'); // note of type 'Node'
-	const cat2FigureDom = document.querySelector('#cat2FigureID'); // note of type 'Node'
-*/
 	console.log(cat1Div);
 	console.log(cat2Div);
 	mainDiv.appendChild(cat1Div);
