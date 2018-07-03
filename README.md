@@ -1,16 +1,55 @@
 <!--
 @todo:
 * document build for this project, thinking about using it as a model later
-	* create, configure the gulpfile.js and document those steps
-	* don't creaste a dist task, because there's no need for a dist folder, as this is just a training project for
 	* Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and the README.md file, modifying it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project, and for running the `dist` task, and also modify the gulpfile.js, with the `dist` task.
+* Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
 -->
 
-# Project: Cat Clicker
+# Project: <new-project>
 
 ## How to Run the App
 
-Click on a picture of a cat display the number of clicks above the respective image.
+Instructions for running this project.
+
+## Clone from `build-basic`?
+
+This Section is written with the expectation that you already have installed globally node.js, gulp, browsersync and eslint
+
+Create a new directory to be your project's repo, at your `home directory` and clone `build-basic` into it:
+
+```
+$ mkdir <new-project>
+$ git clone build-basic <new-project>
+```
+
+Update and Check Outdated npm packages, by running [these commands][8] on the directory where the `package.json` file is located:
+
+```
+$ npm update
+$ npm outdated
+```
+
+Create a new remote repository on [Github][9], then change the <new-project> project's remote repo from the `build-basic` repo to the  repo you just created on Github.
+
+To change:
+
+```
+$ git remote set-url git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+```
+
+Or simply unset the remote for the <new-project> project repo:
+
+```
+$ git remote remove origin
+```
+
+Check if the remote repo has been properly set (or unset):
+
+```
+$ git remote -v
+```
+
+But, if creating a new project from scratch, follow the steps described in the next section.
 
 ## Building The Project With Node.js and a Building Tool
 
@@ -36,11 +75,19 @@ Install the task runner [Gulp.js][3] globally:
 ```
 $ npm install --global gulp-cli
 ```
+
+Install [Browsersync][10] globally:
+
+```
+$ npm install -g browser-sync
+```
+
  Install locally the npm packages I'm going to use for this project (including the Gulp package), in your devDependencies:
 
-* [Gulp][4]
-* [Browsersync][5] (to create a server and reload the browser automaticaly)
-* [Jasmine][6] (tester)
+* [gulp][4]
+* [browsersync][5] (to create a server and reload the browser automaticaly)
+* [jasmine][6] (Tester)
+* [gulp-jsdoc3][12] (Generates Documentation)
 
 ```
 $ npm --install --save-dev gulp browser-sync jasmine
@@ -54,9 +101,9 @@ To create a `spec` directory, containing a `suport` directory, with a `jasmine.j
 $ node node_modules/jasmine/bin/jasmine init
 ```
 
-Create a `spec.js` file, for your test suites.
+Create a `spec.js` file, in the `spec` folder, at the top level directory of your project, for your test suites.
 
-Create a `SpecRunner.html`, to display the test results on your browser.
+Create a `SpecRunner.html`, in the `spec` folder, at the top level directory of your project, to display the test results on your browser.
 
 #### Gulp Configuration
 
@@ -70,11 +117,12 @@ Require the Gulp and Browsersync packages.
 const gulp = require('gulp');
 const bSrc = require('browser-sync').create();
 const bSpecRunner = require('browser-sync').create();
+const jsdoc = require('gulp-jsdoc3');
 ```
 
 Then set it's default task to watch the js files in the `src` directory:
 
-Create the `default` task, with servers for the the `index.html` the `spec/SpecRunner.html` files:
+Create the `default` task, with servers for the the `index.html` the `spec/SpecRunner.html` files, and the `jsdoc` task, for generating documentation:
 
 ```
 gulp.task('default', () => {
@@ -101,6 +149,61 @@ gulp.task('default', () => {
 		ui: false
 	});
 });
+
+// Generates documentation on the `doc` directory
+gulp.task('jsdoc', function (cb) {
+	gulp.src(['./README.md', './js/**/*.js', './spec/**/*.js'], {read: false})
+		.pipe(jsdoc(cb));
+});
+```
+
+If you want to creat a `dist` task, for copying all src files to a `dist` directory upon project completion:
+
+```
+// copies all files from the `src` directory, as well as the README.md file, to a `dist` folder
+gulp.task('dist', function() {
+	gulp.src(['./src/**/*','./*.md'])
+		.pipe(gulp.dest('./dist'));
+});
+
+```
+
+If you want to use SASS:
+
+Run on terminal:
+
+```
+$ npm install --save-dev gulp-sass gulp-autoprefixer
+```
+
+And modify the `gulpfile.js`
+
+```
+const gulp = require('gulp');
+const bSrc = require('browser-sync').create();
+const bSpecRunner = require('browser-sync').create();
+const sass = require('gulp-sass');
+const autoprefixer('gulp-autoprefixer');
+
+//If uses sass:
+gulp.task('sass', function () {
+	return gulp.src('./sass/**/*.scss')
+		.pipe(sass.sync().on('error', sass.logError))
+		.pipe(autoprefixer({
+			browsers: ['last 2 versions']
+		}))
+		.pipe(gulp.dest('./css'));
+});
+
+gulp.task('sass:watch', function () {
+	gulp.watch('./sass/**/*.scss', ['sass']);
+});
+```
+
+Also, modify the first line of the default task, adding it the task 'sass:watch':
+
+```
+gulp.task('default', ['sass:watch'], () => {
 ```
 
 #### Install globally the [Eslint][7] linter:
@@ -137,6 +240,26 @@ It will create an `eslintrc.json` file, which will contain the configurations fo
 
 If you want to create special eslint configurations for a project, just move to that project's directory run `eslint --init`, to configure a `eslintrc.json` file there.
 
+#### Automatic Documentation: Jsdoc
+
+The comments you wish jsdoc to parse should start with `/**`
+
+use [jsdoc tags][11] to display each information within your comments:
+
+```
+/**
+ * @file This file has tests for the app.js file.
+ *
+ * @author Ricardo Bossan <ricardobossan@gmail.com>
+ */
+```
+
+The html files with the documentation for the provided files will be placed on an `out` directory, which will be created on the folder where is run the command:
+
+```
+cd <./file-path/
+jsdoc <./file-path/file-name>
+```
 
 #### Running The Build Tool
 
@@ -146,10 +269,23 @@ If you want to create special eslint configurations for a project, just move to 
 $ gulp
 ```
 
+Generate documentation for the project on the `doc` directory, on the top level directory of the project:
+
+```
+$ gulp jsdoc
+```
+
+======================================================================================
+
 [1]: https://nodejs.org/en/ "Node.js"
 [2]: https://www.npmjs.com/get-npm "Npm"
 [3]: https://github.com/gulpjs/gulp/blob/v3.9.1/docs/getting-started.md "Gulp"
 [4]: https://www.npmjs.com/package/gulp "Gulp on npm"
-[5]: https://www.npmjs.com/package/browser-sync "Browsersync"
+[5]: https://www.npmjs.com/package/browser-sync "Browsersync (Local)"
 [6]: https://jasmine.github.io/pages/getting_started.html "Jasmine"
 [7]: https://www.npmjs.com/package/eslint "Eslint"
+[8]: https://docs.npmjs.com/getting-started/updating-local-packages "Update Npm Packages"
+[9]: https://github.com/ "Github"
+[10]: https://browsersync.io/ "Browsersync (Global)"
+[11]: http://usejsdoc.org/index.html#block-tags "Jsdoc Block Tags"
+[12]: https://www.npmjs.com/package/gulp-jsdoc3 "gulp-jsdoc"

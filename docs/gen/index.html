@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Documentation Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cerulean.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Documentation</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><!--
+@todo:
+* document build for this project, thinking about using it as a model later
+    * Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and the README.md file, modifying it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project, and for running the `dist` task, and also modify the gulpfile.js, with the `dist` task.
+* Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
+-->
+<h1>Project: Cat Clicker</h1><h2>How to Run the App</h2><p>Click on a picture of a cat display the number of clicks above the respective image.</p>
+<h2>Building The Project With Node.js and a Building Tool</h2><h4>Node.js and Npm (Node Package Manager)</h4><p>Install <a href="https://nodejs.org/en/" title="Node.js">Node.js</a>.</p>
+<p>Install the latest version of <a href="https://www.npmjs.com/get-npm" title="Npm">npm</a> via command line:</p>
+<pre class="prettyprint source"><code>$ npm install npm@latest -g</code></pre><p>To initialize a node.js project, run this at the top-level directory of your project:</p>
+<pre class="prettyprint source"><code>$ npm init</code></pre><p>Answer the questions that pop up on the terminal, to create a basic <code>package.json</code> file.</p>
+<p>Install the task runner <a href="https://github.com/gulpjs/gulp/blob/v3.9.1/docs/getting-started.md" title="Gulp">Gulp.js</a> globally:</p>
+<pre class="prettyprint source"><code>$ npm install --global gulp-cli</code></pre><p> Install locally the npm packages I'm going to use for this project (including the Gulp package), in your devDependencies:</p>
+<ul>
+<li><a href="https://www.npmjs.com/package/gulp" title="Gulp on npm">Gulp</a></li>
+<li><a href="https://www.npmjs.com/package/browser-sync" title="Browsersync">Browsersync</a> (to create a server and reload the browser automaticaly)</li>
+<li><a href="https://jasmine.github.io/pages/getting_started.html" title="Jasmine">Jasmine</a> (tester)</li>
+</ul>
+<pre class="prettyprint source"><code>$ npm --install --save-dev gulp browser-sync jasmine</code></pre><h4>Jasmine Configuration</h4><p>To create a <code>spec</code> directory, containing a <code>suport</code> directory, with a <code>jasmine.json</code> file inside, for general configuration purporses, run at the top level directory of your project:</p>
+<pre class="prettyprint source"><code>$ node node_modules/jasmine/bin/jasmine init</code></pre><p>Create a <code>spec.js</code> file, for your test suites.</p>
+<p>Create a <code>SpecRunner.html</code>, to display the test results on your browser.</p>
+<h4>Gulp Configuration</h4><p>Create a <code>gulpfile.js</code> at the top level of your project directory, to require packages and configure tasks.</p>
+<p>Open the <code>gulpfile.js</code> in your IDE.</p>
+<p>Require the Gulp and Browsersync packages.</p>
+<pre class="prettyprint source"><code>const gulp = require('gulp');
+const bSrc = require('browser-sync').create();
+const bSpecRunner = require('browser-sync').create();</code></pre><p>Then set it's default task to watch the js files in the <code>src</code> directory:</p>
+<p>Create the <code>default</code> task, with servers for the the <code>index.html</code> the <code>spec/SpecRunner.html</code> files:</p>
+<pre class="prettyprint source"><code>gulp.task('default', () => {
+    // Reloads browser
+    gulp.watch(&quot;*.html&quot;).on('change', bSrc.reload);
+    gulp.watch(&quot;js/*.js&quot;).on('change', bSrc.reload);
+    gulp.watch('spec/spec.js').on('change', bSrc.reload);
+    gulp.watch(&quot;*.html&quot;).on('change', bSpecRunner.reload);
+    gulp.watch(&quot;js/*.js&quot;).on('change', bSpecRunner.reload);
+    gulp.watch('spec/spec.js').on('change', bSpecRunner.reload);
+
+    // Servers
+    bSrc.init({
+        server: &quot;./&quot;,
+        port: 3000,
+        index: &quot;index.html&quot;,
+        ui: false
+
+    });
+    bSpecRunner.init({
+        server: &quot;./&quot;,
+        port: 8080,
+        index: &quot;spec/SpecRunner.html&quot;,
+        ui: false
+    });
+});</code></pre><h4>Install globally the <a href="https://www.npmjs.com/package/eslint" title="Eslint">Eslint</a> linter:</h4><pre class="prettyprint source"><code>$ npm install -g eslint</code></pre><p>Then move to the <code>home directory</code> for your projects and run this command:</p>
+<pre class="prettyprint source"><code>$ eslint --init</code></pre><p>Add the enviroments you want to lint. I use this configuration on the section <code>&quot;env&quot;</code>, of your <code>.eslintrc.json</code> file, on the <code>home directory</code>, or on the top level of you project directory</p>
+<p>I use this configuration on my <code>home directory</code>s <code>.eslintrc.json</code> file:</p>
+<pre class="prettyprint source"><code>{
+    &quot;env&quot;: {
+        &quot;browser&quot;: true,
+        &quot;es6&quot;: true,
+        &quot;jasmine&quot;: true,
+        &quot;amd&quot;: true,
+        &quot;jquery&quot;: true,
+        &quot;node&quot;: true
+    },
+}</code></pre><p>It will create an <code>eslintrc.json</code> file, which will contain the configurations for all your projects located at the <code>home directory</code>.</p>
+<p>If you want to create special eslint configurations for a project, just move to that project's directory run <code>eslint --init</code>, to configure a <code>eslintrc.json</code> file there.</p>
+<h4>Running The Build Tool</h4><ul>
+<li>run the <code>default</code> task, to automatically reload the browser window when a js file is modified (upon save). On the command line, enter:</li>
+</ul>
+<pre class="prettyprint source"><code>$ gulp</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        js/app.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>this file holds the logic for implementing a cat clicker page, where, once you click in a catr picture, a counter above it increments the number of clicks on that picture by 1.</p></div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li>Ricardo Bossan (ricardobossan@gmail.com)lesson: FEND Nanodegree / Chapter 4: Front-End Applications / Lesson 1: Changing Expectations
+ "https://classroom.udacity.com/nanodegrees/nd001/parts/e4e4c31c-2348-4382-826f-caac197d6f5f/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34408790480923"</li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+	<dt class="tag-todo method-doc-label method-doc-details-label">To Do:</dt>
+	<dd class="tag-todo">
+		<ul>
+			<li>from what I got, two cat pictures, with their names displayed above each. Think I ll use flexbox or gridCSS to display them responsively, and add their names with figcaptions, but adding the <figcaptions> before the <img> tagsGIT: create a new branch "tdd", and remake the code on Test Driven Development, for learning/training ituse the "console.log"s below as tests (describes and its)</li>
+			</ul>
+	</dd>
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+	<h1 class="page-title">Index</h1>
+<section>
+
+<header>
+    
+        <h2>
+        spec/spec.js
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>This file has tests for the app.js file.</p></div>
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+	<dt class="tag-author method-doc-label method-doc-details-label">Author:</dt>
+	<dd class="tag-author">
+		<ul>
+			<li><a href="mailto:ricardobossan@gmail.com">Ricardo Bossan</a></li>
+			</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+	<dt class="tag-todo method-doc-label method-doc-details-label">To Do:</dt>
+	<dd class="tag-todo">
+		<ul>
+			<li>The application should display two cats. Each cat includes: 1) the cat's name; b) a picture of the cat; c) text showing the number of clicks.</li>
+			
+			<li>The specifics of the layout do not matter, so style it however you'd like.</li>
+			
+			<li>The number of clicks should increment when the cat picture is clicked.</li>
+			</ul>
+	</dd>
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on July 3rd 2018, 5:50:19 am
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

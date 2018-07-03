@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+<body style="background: transparent;">
+    <script src="scripts/docstrap.lib.js"></script>
+    <script src="scripts/lunr.min.js"></script>
+    <script src="scripts/fulltext-search.js"></script>
+
+    <script type="text/x-docstrap-searchdb">
+    {"index.html":{"id":"index.html","title":"Index","body":" Documentation Project: Cat ClickerHow to Run the AppClick on a picture of a cat display the number of clicks above the respective image. Building The Project With Node.js and a Building ToolNode.js and Npm (Node Package Manager)Install Node.js. Install the latest version of npm via command line: $ npm install npm@latest -gTo initialize a node.js project, run this at the top-level directory of your project: $ npm initAnswer the questions that pop up on the terminal, to create a basic package.json file. Install the task runner Gulp.js globally: $ npm install --global gulp-cli Install locally the npm packages I'm going to use for this project (including the Gulp package), in your devDependencies: Gulp Browsersync (to create a server and reload the browser automaticaly) Jasmine (tester) $ npm --install --save-dev gulp browser-sync jasmineJasmine ConfigurationTo create a spec directory, containing a suport directory, with a jasmine.json file inside, for general configuration purporses, run at the top level directory of your project: $ node node_modules/jasmine/bin/jasmine initCreate a spec.js file, for your test suites. Create a SpecRunner.html, to display the test results on your browser. Gulp ConfigurationCreate a gulpfile.js at the top level of your project directory, to require packages and configure tasks. Open the gulpfile.js in your IDE. Require the Gulp and Browsersync packages. const gulp = require('gulp'); const bSrc = require('browser-sync').create(); const bSpecRunner = require('browser-sync').create();Then set it's default task to watch the js files in the src directory: Create the default task, with servers for the the index.html the spec/SpecRunner.html files: gulp.task('default', () =&gt; { // Reloads browser gulp.watch(&quot;*.html&quot;).on('change', bSrc.reload); gulp.watch(&quot;js/*.js&quot;).on('change', bSrc.reload); gulp.watch('spec/spec.js').on('change', bSrc.reload); gulp.watch(&quot;*.html&quot;).on('change', bSpecRunner.reload); gulp.watch(&quot;js/*.js&quot;).on('change', bSpecRunner.reload); gulp.watch('spec/spec.js').on('change', bSpecRunner.reload); // Servers bSrc.init({ server: &quot;./&quot;, port: 3000, index: &quot;index.html&quot;, ui: false }); bSpecRunner.init({ server: &quot;./&quot;, port: 8080, index: &quot;spec/SpecRunner.html&quot;, ui: false }); });Install globally the Eslint linter:$ npm install -g eslintThen move to the home directory for your projects and run this command: $ eslint --initAdd the enviroments you want to lint. I use this configuration on the section &quot;env&quot;, of your .eslintrc.json file, on the home directory, or on the top level of you project directory I use this configuration on my home directorys .eslintrc.json file: { &quot;env&quot;: { &quot;browser&quot;: true, &quot;es6&quot;: true, &quot;jasmine&quot;: true, &quot;amd&quot;: true, &quot;jquery&quot;: true, &quot;node&quot;: true }, }It will create an eslintrc.json file, which will contain the configurations for all your projects located at the home directory. If you want to create special eslint configurations for a project, just move to that project's directory run eslint --init, to configure a eslintrc.json file there. Running The Build Tool run the default task, to automatically reload the browser window when a js file is modified (upon save). On the command line, enter: $ gulp Index js/app.js this file holds the logic for implementing a cat clicker page, where, once you click in a catr picture, a counter above it increments the number of clicks on that picture by 1. Author: Ricardo Bossan (ricardobossan@gmail.com) lesson: FEND Nanodegree / Chapter 4: Front-End Applications / Lesson 1: Changing Expectations &quot;https://classroom.udacity.com/nanodegrees/nd001/parts/e4e4c31c-2348-4382-826f-caac197d6f5f/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34408790480923&quot; To Do: from what I got, two cat pictures, with their names displayed above each. Think I ll use flexbox or gridCSS to display them responsively, and add their names with figcaptions, but adding the before the tags GIT: create a new branch &quot;tdd&quot;, and remake the code on Test Driven Development, for learning/training it use the &quot;console.log&quot;s below as tests (describes and its) Index spec/spec.js This file has tests for the app.js file. Author: Ricardo Bossan To Do: The application should display two cats. Each cat includes: 1) the cat's name; b) a picture of the cat; c) text showing the number of clicks. The specifics of the layout do not matter, so style it however you'd like. The number of clicks should increment when the cat picture is clicked. × Search results Close Documentation generated by JSDoc 3.5.5 on July 3rd 2018, 5:50:19 am using the DocStrap template. "}}
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            Searcher.init();
+        });
+
+        $(window).on("message", function(msg) {
+            var msgData = msg.originalEvent.data;
+
+            if (msgData.msgid != "docstrap.quicksearch.start") {
+                return;
+            }
+
+            var results = Searcher.search(msgData.searchTerms);
+
+            window.parent.postMessage({"results": results, "msgid": "docstrap.quicksearch.done"}, "*");
+        });
+    </script>
+</body>
+</html>
