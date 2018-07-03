@@ -67,42 +67,35 @@ Open the `gulpfile.js` in your IDE.
 Require the Gulp and Browsersync packages.
 
 ```
-var gulp = require('gulp');
-var bs-src = require('browser-sync').create();
-var bs-spec-runner = require('browser-sync').create();
+const gulp = require('gulp');
+const bSrc = require('browser-sync').create();
+const bSpecRunner = require('browser-sync').create();
 ```
 
 Then set it's default task to watch the js files in the `src` directory:
 
-```
-gulp.task('default', () => {
-	// Reloads browser
-	gulp.watch('./src/**/*.js').on('change', browsersync.reload);
-});
-```
-
-Create a server for Browsersync, inside the `default` task:
+Create the `default` task, with servers for the the `index.html` the `spec/SpecRunner.html` files:
 
 ```
 gulp.task('default', () => {
 	// Reloads browser
-	gulp.watch("*.html").on('change', bs-src.reload);
-	gulp.watch("js/*.js").on('change', bs-src.reload);
-	gulp.watch("*.html").on('change', bs-spec-runner.reload);
-	gulp.watch("js/*.js").on('change', bs-spec-runner.reload);
+	gulp.watch("*.html").on('change', bSrc.reload);
+	gulp.watch("js/*.js").on('change', bSrc.reload);
+	gulp.watch("*.html").on('change', bSpecRunner.reload);
+	gulp.watch("js/*.js").on('change', bSpecRunner.reload);
 	gulp.watch('js/*.js', [/*'scripts', */'lint']);
-	gulp.watch('spec/spec.js').on('change', bs-src.reload);
-	gulp.watch('spec/spec.js').on('change', bs-spec-runner.reload);
+	gulp.watch('spec/spec.js').on('change', bSrc.reload);
+	gulp.watch('spec/spec.js').on('change', bSpecRunner.reload);
 
 	// Servers
-	bs-src.init({
+	bSrc.init({
 		server: "./",
 		port: 3000,
 		index: "index.html",
 		ui: false
 
 	});
-	bs-spec-runner.init({
+	bSpecRunner.init({
 		server: "./",
 		port: 8080,
 		index: "spec/SpecRunner.html",
@@ -111,15 +104,6 @@ gulp.task('default', () => {
 });
 ```
 
-Create the `dist` task, to move all non build files to the `dist` folder:
-
-```
-gulp.task('dist', function() {
-	gulp.src('./src/**/*');
-	gulp.src('./*.md')
-		.pipe(gulp.dest('./dist'));
-});
-```
 #### Install globally the [Eslint](https://www.npmjs.com/package/eslint) linter:
 
 ```
