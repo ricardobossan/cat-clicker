@@ -1,9 +1,9 @@
 <!--
 @todo:
 * document build for this project, thinking about using it as a model later
-** pass all links to ID tags, referenced in the end of this README file
-** create, configure the gulpfile.js and document those steps
-** don't creaste a dist task, because there's no need for a dist folder, as this is just a training project for
+	* create, configure the gulpfile.js and document those steps
+	* don't creaste a dist task, because there's no need for a dist folder, as this is just a training project for
+	* Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and ths dding it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project.
 -->
 
 # Project: Cat Clicker
@@ -16,9 +16,9 @@ Click on a picture of a cat display the number of clicks above the respective im
 
 #### Node.js and Npm (Node Package Manager)
 
-Install [Node.js](https://nodejs.org/en/).
+Install [Node.js][1].
 
-Install the latest version of [npm](https://www.npmjs.com/get-npm) via command line:
+Install the latest version of [npm][2] via command line:
 
 ```
 $ npm install npm@latest -g
@@ -31,16 +31,16 @@ $ npm init
 ```
 Answer the questions that pop up on the terminal, to create a basic `package.json` file.
 
-Install the task runner [Gulp.js](https://github.com/gulpjs/gulp/blob/v3.9.1/docs/getting-started.md) globally:
+Install the task runner [Gulp.js][3] globally:
 
 ```
 $ npm install --global gulp-cli
 ```
  Install locally the npm packages I'm going to use for this project (including the Gulp package), in your devDependencies:
 
-* [Gulp](https://www.npmjs.com/package/gulp)
-* [Browsersync](https://www.npmjs.com/package/browser-sync) (to create a server and reload the browser automaticaly)
-* [Jasmine](https://jasmine.github.io/pages/getting_started.html) (tester)
+* [Gulp][4]
+* [Browsersync][5] (to create a server and reload the browser automaticaly)
+* [Jasmine][6] (tester)
 
 ```
 $ npm --install --save-dev gulp browser-sync jasmine
@@ -104,7 +104,7 @@ gulp.task('default', () => {
 });
 ```
 
-#### Install globally the [Eslint](https://www.npmjs.com/package/eslint) linter:
+#### Install globally the [Eslint][7] linter:
 
 ```
 $ npm install -g eslint
@@ -153,4 +153,10 @@ $ gulp
 $ gulp dist
 ```
 
-
+[1]: https://nodejs.org/en/ "Node.js"
+[2]: https://www.npmjs.com/get-npm "Npm"
+[3]: https://github.com/gulpjs/gulp/blob/v3.9.1/docs/getting-started.md "Gulp"
+[4]: https://www.npmjs.com/package/gulp "Gulp on npm"
+[5]: https://www.npmjs.com/package/browser-sync "Browsersync"
+[6]: https://jasmine.github.io/pages/getting_started.html "Jasmine"
+[7]: https://www.npmjs.com/package/eslint "Eslint"
