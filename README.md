@@ -117,6 +117,7 @@ Require the Gulp and Browsersync packages.
 const gulp = require('gulp');
 const bSrc = require('browser-sync').create();
 const bSpecRunner = require('browser-sync').create();
+const bDocumentation = require('browser-sync').create();
 const jsdoc = require('gulp-jsdoc3');
 ```
 
@@ -125,14 +126,20 @@ Then set it's default task to watch the js files in the `src` directory:
 Create the `default` task, with servers for the the `index.html` the `spec/SpecRunner.html` files, and the `jsdoc` task, for generating documentation:
 
 ```
-gulp.task('default', () => {
+gulp.task('default', ['jsdoc'], () => {
 	// Reloads browser
 	gulp.watch("*.html").on('change', bSrc.reload);
 	gulp.watch("js/*.js").on('change', bSrc.reload);
-	gulp.watch('spec/spec.js').on('change', bSrc.reload);
 	gulp.watch("*.html").on('change', bSpecRunner.reload);
 	gulp.watch("js/*.js").on('change', bSpecRunner.reload);
 	gulp.watch('spec/spec.js').on('change', bSpecRunner.reload);
+	gulp.watch("js/*.js").on('change', bDocumentation.reload);
+	gulp.watch('spec/spec.js').on('change', bDocumentation.reload);
+
+	/** @tutorial https://scotch.io/tutorials/prevent-errors-from-crashing-gulp-watch*/
+	// when saving a watched file, the `jsdoc` task takes needs a second save, after a few seconds, to update the documentation
+	gulp.watch("js/*.js", ['jsdoc']);
+	gulp.watch('spec/spec.js', ['jsdoc']);
 
 	// Servers
 	bSrc.init({
@@ -146,6 +153,12 @@ gulp.task('default', () => {
 		server: "./",
 		port: 8080,
 		index: "spec/SpecRunner.html",
+		ui: false
+	});
+	bDocumentation.init({
+		server: "./docs/gen",
+		port: 8080,
+		index: "index.html",
 		ui: false
 	});
 });
@@ -274,8 +287,6 @@ Generate documentation for the project on the `doc` directory, on the top level 
 ```
 $ gulp jsdoc
 ```
-
-======================================================================================
 
 [1]: https://nodejs.org/en/ "Node.js"
 [2]: https://www.npmjs.com/get-npm "Npm"
