@@ -3,7 +3,7 @@
 * document build for this project, thinking about using it as a model later
 	* create, configure the gulpfile.js and document those steps
 	* don't creaste a dist task, because there's no need for a dist folder, as this is just a training project for
-	* Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and ths dding it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project.
+	* Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and the README.md file, modifying it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project, and for running the `dist` task, and also modify the gulpfile.js, with the `dist` task.
 -->
 
 # Project: Cat Clicker
@@ -81,10 +81,9 @@ gulp.task('default', () => {
 	// Reloads browser
 	gulp.watch("*.html").on('change', bSrc.reload);
 	gulp.watch("js/*.js").on('change', bSrc.reload);
+	gulp.watch('spec/spec.js').on('change', bSrc.reload);
 	gulp.watch("*.html").on('change', bSpecRunner.reload);
 	gulp.watch("js/*.js").on('change', bSpecRunner.reload);
-	gulp.watch('js/*.js', [/*'scripts', */'lint']);
-	gulp.watch('spec/spec.js').on('change', bSrc.reload);
 	gulp.watch('spec/spec.js').on('change', bSpecRunner.reload);
 
 	// Servers
@@ -145,12 +144,6 @@ If you want to create special eslint configurations for a project, just move to 
 
 ```
 $ gulp
-```
-
-* When the project is ready, run the `dist` task, to move all non build files to the `dist` directory:
-
-```
-$ gulp dist
 ```
 
 [1]: https://nodejs.org/en/ "Node.js"
