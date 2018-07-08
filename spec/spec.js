@@ -3,7 +3,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo The application should display two cats. Each cat includes: 1) the cat's name; b) a picture of the cat; c) text showing the number of clicks.
+ * @todo The application should display two cats. Each cat includes: a) the cat's name; b) a picture of the cat; c) text showing the number of clicks.
  * @todo The specifics of the layout do not matter, so style it however you'd like.
  * @todo The number of clicks should increment when the cat picture is clicked.
  */
