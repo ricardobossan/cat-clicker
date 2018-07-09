@@ -15,6 +15,11 @@ elem.addEventListener('click', function(){
   //the element has been clicked... do stuff here
 }, false);
 */
-describe('Creates a', () => {
-	it('');
+describe('generates', () => {
+	it(' a fragment', () => {
+		expect(fragment).not.toBe(undefined);
+	});
+});
+describe('attaches fragment to the body', () => {
+	it('')
 });

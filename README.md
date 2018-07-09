@@ -101,9 +101,9 @@ To create a `spec` directory, containing a `suport` directory, with a `jasmine.j
 $ node node_modules/jasmine/bin/jasmine init
 ```
 
-Create a `spec.js` file, in the `spec` folder, at the top level directory of your project, for your test suites.
+Create a `SpecRunner.html` at the top level directory of your project, to display the test results on your browser.
 
-Create a `SpecRunner.html`, in the `spec` folder, at the top level directory of your project, to display the test results on your browser.
+Create a `spec.js` file, in the `spec` folder, at the top level directory of your project, for your test suites.
 
 #### Gulp Configuration
 
@@ -123,7 +123,7 @@ const jsdoc = require('gulp-jsdoc3');
 
 Then set it's default task to watch the js files in the `src` directory:
 
-Create the `default` task, with servers for the the `index.html` the `spec/SpecRunner.html` files, and the `jsdoc` task, for generating documentation:
+Create the `default` task, with servers for the the `index.html`, the `SpecRunner.html` files, and the `jsdoc` task, for generating documentation:
 
 ```
 gulp.task('default', ['jsdoc'], () => {
@@ -152,7 +152,7 @@ gulp.task('default', ['jsdoc'], () => {
 	bSpecRunner.init({
 		server: "./",
 		port: 8080,
-		index: "spec/SpecRunner.html",
+		index: "SpecRunner.html",
 		ui: false
 	});
 	bDocumentation.init({

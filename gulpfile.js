@@ -30,7 +30,7 @@ gulp.task('default', ['jsdoc'], () => {
 	bSpecRunner.init({
 		server: "./",
 		port: 8000,
-		index: "spec/SpecRunner.html",
+		index: "SpecRunner.html",
 		ui: false
 	});
 	bDocumentation.init({
