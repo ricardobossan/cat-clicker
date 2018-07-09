@@ -15,11 +15,31 @@ elem.addEventListener('click', function(){
   //the element has been clicked... do stuff here
 }, false);
 */
-describe('generates', () => {
-	it(' a fragment', () => {
-		expect(fragment).not.toBe(undefined);
+describe('checks if DOM is loaded', () => {
+	beforeEach(() => {
+		document.addEventListener('DOMContentLoaded', () => {
+			console.log(document.querySelector('body'));
+		});
 	});
-});
-describe('attaches fragment to the body', () => {
-	it('')
+	describe('generates', () => {
+		it('two cat pictures', () => {
+/*			const fragment = document.createDocumentFragment();
+			const domBody = document.querySelector('body');
+*/			expect(fragment).not.toBe(undefined);
+			expect(domBody).toEqual(document.getElementsByTagName('body')[0]);
+		});
+	});
+	xdescribe('piles the cat pictures on top of each other', () => {
+		it('using CSS grid or flexbox', () => {
+			expect();
+		});
+	});
+	xdescribe('clicking each cat picture', () => {
+		it('increases the number of clicks counter', () => {
+			expect();
+		});
+		it('displays the number of counts', () => {
+			expect();
+		});
+	});
 });

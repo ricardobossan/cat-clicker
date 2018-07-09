@@ -12,4 +12,7 @@
  * Generates the DOM
  *  @function
  */
-const generate = (() => {});
+const generate = (() => {
+	const fragment = document.createDocumentFragment();
+	const domBody = document.querySelector('body');
+})();
