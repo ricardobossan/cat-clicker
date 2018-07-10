@@ -25,20 +25,25 @@ describe('This suite contains all the tests, to ensure the DOM is loaded, before
 	describe('generates two cat pictures, by', () => {
 		const mainDiv = document.createElement('main');
 		let catDivs = [];
+		let catFigures = [];
 		for(let i = 0; i < 2; i++) {
 			catDivs.push(document.createElement('div'));
+			catFigures.push(`<figure><figcaption>cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="cat ${i+1}"/></figure>`);
 			mainDiv.appendChild(catDivs[i]);
+			mainDiv.children[i].innerHTML = catFigures[i];
+			console.log(mainDiv);
 		}
+
 		it('creating a mainDiv', () => {
 			expect(mainDiv.outerHTML).toContain('<main>');
 		});
 		it('creating two divs inside the mainDiv', () => {
-			expect(mainDiv.firstChild.outerHTML).toContain('<div>');
-			expect(mainDiv.lastChild.outerHTML).toContain('<div>');
+			expect(mainDiv.children[0].outerHTML).toContain('<div>');
+			expect(mainDiv.children[1].outerHTML).toContain('<div>');
 		});
 		it('making each div contain a <figure> for each cat pic', () => {
-			expect(mainDiv.firstChild.outerHTML).toContain('<figure>');
-			expect(mainDiv.lastChild.outerHTML).toContain('<figure>');
+			expect(mainDiv.children[0].outerHTML).toContain('<figure>');
+			expect(mainDiv.children[1].outerHTML).toContain('<figure>');
 		});
 		it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">');
 		it('creating a document fragment');
