@@ -24,9 +24,4 @@ const generate = (() => {
 	}
 	const fragment = document.createDocumentFragment();
 	fragment.appendChild(mainDiv);
-	document.addEventListener('DOMContentLoaded', () => {
-		const bodyDom = document.querySelector('body');
-		bodyDom.appendChild(fragment);
-	});
-
 })();
