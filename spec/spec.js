@@ -9,12 +9,11 @@
  */
 
 /**
- * @desc Encapsulated the whole code for the tests inside a `setTimeout()` method, so that the dom would already have loaded when
+ * @desc Encapsulated the whole code for the tests inside a `setTimeout()` method, with an empty delay, so that the DOM would already have loaded when
  */
 setTimeout(function() {
 	(function() {
 		describe('All code to be developed will be put in this suite, which will contain all the others', () => {
-			console.log(document.querySelector('body'));
 			const mainDiv = document.createElement('main');
 			mainDiv.setAttribute("style", "display: flex; flex-direction: column; flex-wrap: wrap; width: 100%;");
 			let catDivs = [];
@@ -27,16 +26,15 @@ setTimeout(function() {
 			}
 			const fragment = document.createDocumentFragment();
 			fragment.appendChild(mainDiv);
-			// This listener ensures that the DOM is loaded, in order to be able to append the fragment to the <body>
 			const bodyDom = document.querySelector('body');
 			bodyDom.setAttribute("style", "width: 100%;");
 			bodyDom.appendChild(fragment);
-			console.log(document.querySelector('main'));
-			/*
+
 			for(let j = 0; j <= 1; j++){
-				document.querySelectorAll('figure').setAttribute("style", "width: 80%;");
+				document.querySelectorAll('figure')[j].setAttribute("style", "width: 80%;");
+				console.log(document.querySelectorAll('figure')[j]);
 			}
-			*/
+
 			describe('generates two cat pictures, by', () => {
 				it('creating a mainDiv', () => {
 					expect(mainDiv.outerHTML).toContain('main');
@@ -46,8 +44,8 @@ setTimeout(function() {
 					expect(mainDiv.children[1].outerHTML).toContain('<div>');
 				});
 				it('making each div contain a <figure> for each cat pic', () => {
-					expect(mainDiv.children[0].outerHTML).toContain('<figure>');
-					expect(mainDiv.children[1].outerHTML).toContain('<figure>');
+					expect(mainDiv.children[0].outerHTML).toContain('<figure');
+					expect(mainDiv.children[1].outerHTML).toContain('<figure');
 				});
 				it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
 					expect(mainDiv.children[0].children[0].firstChild.outerHTML).toContain('<figcaption>');
@@ -69,7 +67,7 @@ setTimeout(function() {
 					expect(mainDiv.style.display).toBe('flex');
 					expect(mainDiv.style.flexDirection).toBe('column');
 					expect(mainDiv.style.flexWrap).toBe('wrap');
-					expect(document.querySelectorAll('figure').style.width).toBe('80%');
+					expect(document.querySelectorAll('figure')[0,1].style.width).toBe('80%');
 				});
 				it('when page width < 960px');
 				it('but cat pictures are side by side, when >= 960px');
