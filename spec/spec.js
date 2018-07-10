@@ -32,6 +32,8 @@ describe('This suite contains all the tests, to ensure the DOM is loaded, before
 			mainDiv.appendChild(catDivs[i]);
 			mainDiv.children[i].innerHTML = catFigures[i];
 		}
+		const fragment = document.createDocumentFragment();
+		fragment.appendChild(mainDiv);
 
 		it('creating a mainDiv', () => {
 			expect(mainDiv.outerHTML).toContain('<main>');
@@ -50,7 +52,12 @@ describe('This suite contains all the tests, to ensure the DOM is loaded, before
 			expect(mainDiv.children[0].children[0].lastChild.outerHTML).toContain('<img');
 			expect(mainDiv.children[1].children[0].lastChild.outerHTML).toContain('<img');
 		});
-		it('creating a document fragment');
+		it('creating a document fragment', () => {
+			expect(fragment.toString()).toBe('[object DocumentFragment]');
+		});
+		it('attaching the mainDiv to the document fragment', () => {
+			expect(fragment.firstChild).toBe(mainDiv);
+		});
 		it('attaching the document fragment in the body');
 	});
 	xdescribe('piles the cat pictures on top of each other,', () => {
