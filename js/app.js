@@ -13,5 +13,20 @@
  *  @function
  */
 const generate = (() => {
+	const mainDiv = document.createElement('main');
+	let catDivs = [];
+	let catFigures = [];
+	for(let i = 0; i < 2; i++) {
+		catDivs.push(document.createElement('div'));
+		catFigures.push(`<figure><figcaption>cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="cat ${i+1}"/></figure>`);
+		mainDiv.appendChild(catDivs[i]);
+		mainDiv.children[i].innerHTML = catFigures[i];
+	}
+	const fragment = document.createDocumentFragment();
+	fragment.appendChild(mainDiv);
+	document.addEventListener('DOMContentLoaded', () => {
+		const bodyDom = document.querySelector('body');
+		bodyDom.appendChild(fragment);
+	});
 
 })();

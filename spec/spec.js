@@ -16,65 +16,64 @@ elem.addEventListener('click', function(){
   //the element has been clicked... do stuff here
 }, false);
 */
-describe('This suite contains all the tests, to ensure the DOM is loaded, before running them', () => {
-	beforeEach(() => {
-		document.addEventListener('DOMContentLoaded', () => {
-			console.log(document.querySelector('body'));
-		});
-	});
-	describe('generates two cat pictures, by', () => {
-		const mainDiv = document.createElement('main');
-		let catDivs = [];
-		let catFigures = [];
-		for(let i = 0; i < 2; i++) {
-			catDivs.push(document.createElement('div'));
-			catFigures.push(`<figure><figcaption>cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="cat ${i+1}"/></figure>`);
-			mainDiv.appendChild(catDivs[i]);
-			mainDiv.children[i].innerHTML = catFigures[i];
-		}
-		const fragment = document.createDocumentFragment();
-		fragment.appendChild(mainDiv);
+describe('generates two cat pictures, by', () => {
+	const mainDiv = document.createElement('main');
+	let catDivs = [];
+	let catFigures = [];
+	for(let i = 0; i < 2; i++) {
+		catDivs.push(document.createElement('div'));
+		catFigures.push(`<figure><figcaption>cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="cat ${i+1}"/></figure>`);
+		mainDiv.appendChild(catDivs[i]);
+		mainDiv.children[i].innerHTML = catFigures[i];
+	}
+	const fragment = document.createDocumentFragment();
+	fragment.appendChild(mainDiv);
 
-		it('creating a mainDiv', () => {
-			expect(mainDiv.outerHTML).toContain('<main>');
-		});
-		it('creating two divs inside the mainDiv', () => {
-			expect(mainDiv.children[0].outerHTML).toContain('<div>');
-			expect(mainDiv.children[1].outerHTML).toContain('<div>');
-		});
-		it('making each div contain a <figure> for each cat pic', () => {
-			expect(mainDiv.children[0].outerHTML).toContain('<figure>');
-			expect(mainDiv.children[1].outerHTML).toContain('<figure>');
-		});
-		it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
-			expect(mainDiv.children[0].children[0].firstChild.outerHTML).toContain('<figcaption>');
-			expect(mainDiv.children[1].children[0].firstChild.outerHTML).toContain('<figcaption>');
-			expect(mainDiv.children[0].children[0].lastChild.outerHTML).toContain('<img');
-			expect(mainDiv.children[1].children[0].lastChild.outerHTML).toContain('<img');
-		});
-		it('creating a document fragment', () => {
-			expect(fragment.toString()).toBe('[object DocumentFragment]');
-		});
-		it('attaching the mainDiv to the document fragment', () => {
-			expect(fragment.firstChild).toBe(mainDiv);
-		});
-		it('attaching the document fragment in the body');
+	// This listener ensures that the DOM is loaded, in order to be able to append the fragment to the <body>
+	document.addEventListener('DOMContentLoaded', () => {
+		const bodyDom = document.querySelector('body');
+		bodyDom.appendChild(fragment);
 	});
-	xdescribe('piles the cat pictures on top of each other,', () => {
-		it('using CSS grid or flexbox', () => {
-			expect();
-		});
-		it('when page width < 960px');
-		it('but cat pictures are side by side, when >= 960px');
+	it('creating a mainDiv', () => {
+		expect(mainDiv.outerHTML).toContain('<main>');
 	});
-	xdescribe('clicking each cat picture', () => {
-		it('increases the number of clicks at the counter', () => {
-			expect();
-		});
-		it('displays the number of counts', () => {
-			expect();
-		});
-		it('above each cat\'s picture <figcaption>');
+	it('creating two divs inside the mainDiv', () => {
+		expect(mainDiv.children[0].outerHTML).toContain('<div>');
+		expect(mainDiv.children[1].outerHTML).toContain('<div>');
+	});
+	it('making each div contain a <figure> for each cat pic', () => {
+		expect(mainDiv.children[0].outerHTML).toContain('<figure>');
+		expect(mainDiv.children[1].outerHTML).toContain('<figure>');
+	});
+	it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
+		expect(mainDiv.children[0].children[0].firstChild.outerHTML).toContain('<figcaption>');
+		expect(mainDiv.children[1].children[0].firstChild.outerHTML).toContain('<figcaption>');
+		expect(mainDiv.children[0].children[0].lastChild.outerHTML).toContain('<img');
+		expect(mainDiv.children[1].children[0].lastChild.outerHTML).toContain('<img');
+	});
+	it('creating a document fragment', () => {
+		expect(fragment.toString()).toBe('[object DocumentFragment]');
+	});
+	it('attaching the document fragment in the body', () => {
+		expect(document.querySelector('main')).not.toBe(null);
+	});
+});
+xdescribe('piles the cat pictures on top of each other,', () => {
+	it('using CSS grid or flexbox', () => {
+		expect();
+	});
+	it('when page width < 960px');
+	it('but cat pictures are side by side, when >= 960px');
+});
+xdescribe('clicking each cat picture', () => {
+	it('increases the number of clicks at the counter', () => {
+		expect();
+	});
+	it('displays the number of counts', () => {
+		expect();
+	});
+	it('above each cat\'s picture <figcaption>', () => {
+		expect();
 	});
 });
 
