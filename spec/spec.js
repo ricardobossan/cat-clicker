@@ -31,7 +31,6 @@ describe('This suite contains all the tests, to ensure the DOM is loaded, before
 			catFigures.push(`<figure><figcaption>cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="cat ${i+1}"/></figure>`);
 			mainDiv.appendChild(catDivs[i]);
 			mainDiv.children[i].innerHTML = catFigures[i];
-			console.log(mainDiv);
 		}
 
 		it('creating a mainDiv', () => {
@@ -45,7 +44,12 @@ describe('This suite contains all the tests, to ensure the DOM is loaded, before
 			expect(mainDiv.children[0].outerHTML).toContain('<figure>');
 			expect(mainDiv.children[1].outerHTML).toContain('<figure>');
 		});
-		it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">');
+		it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
+			expect(mainDiv.children[0].children[0].firstChild.outerHTML).toContain('<figcaption>');
+			expect(mainDiv.children[1].children[0].firstChild.outerHTML).toContain('<figcaption>');
+			expect(mainDiv.children[0].children[0].lastChild.outerHTML).toContain('<img');
+			expect(mainDiv.children[1].children[0].lastChild.outerHTML).toContain('<img');
+		});
 		it('creating a document fragment');
 		it('attaching the document fragment in the body');
 	});
