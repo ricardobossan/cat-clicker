@@ -5,11 +5,11 @@
 * Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
 -->
 
-# Project: <new-project>
+# Project: Cat Clicker
 
 ## How to Run the App
 
-Instructions for running this project.
+Click on a picture of a cat to make it's click counter increase.
 
 ## Clone from `build-basic`?
 
