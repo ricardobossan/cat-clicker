@@ -3,6 +3,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
+ * @todo Figure out why when I click the pictures, the counter doesn't increment, specially for the "display number of clicks" test.
  * @todo The application should display two cats. Each cat includes: a) the cat's name; b) a picture of the cat; c) text showing the number of clicks.
  * @todo The specifics of the layout do not matter, so style it however you'd like.
  * @todo The number of clicks should increment when the cat picture is clicked.
@@ -28,12 +29,14 @@ setTimeout(function() {
 			mainDiv.setAttribute("style", "display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%;");
 			let catDivs = [];
 			let catFigures = [];
+			let clickCountField = [];
 			for(let i = 0; i < 2; i++) {
 				catDivs.push(document.createElement('div'));
 				catFigures.push(`<figure><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
 				mainDiv.appendChild(catDivs[i]);
 				mainDiv.children[i].innerHTML = catFigures[i];
 				catDivs[i].classList.add('catDiv');
+				clickCountField.push(document.createElement('div'));
 			}
 			bodyDom.appendChild(fragment);
 			bodyDom.setAttribute("style", "width: 100%;");
@@ -56,6 +59,12 @@ setTimeout(function() {
 			figures[1].addEventListener("click", () => {
 				cat2ClickCount++;
 			});
+			catDivs[0].insertAdjacentHTML("afterbegin", clickCountField[0].outerHTML);
+			catDivs[1].insertAdjacentHTML("afterbegin", clickCountField[1].outerHTML);
+			let cat1ClickField = catDivs[0].children[0];
+			let cat2ClickField = catDivs[1].children[0];
+			cat1ClickField.textContent = cat1ClickCount;
+			cat2ClickField.textContent = cat2ClickCount;
 
 			describe('generates two cat pictures, by', () => {
 				it('creating a mainDiv', () => {
@@ -70,10 +79,10 @@ setTimeout(function() {
 					expect(mainDiv.children[1].outerHTML).toContain('<figure');
 				});
 				it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
-					expect(mainDiv.children[0].children[0].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainDiv.children[1].children[0].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainDiv.children[0].children[0].lastChild.outerHTML).toContain('<img');
-					expect(mainDiv.children[1].children[0].lastChild.outerHTML).toContain('<img');
+					expect(mainDiv.children[0].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainDiv.children[1].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainDiv.children[0].children[1].lastChild.outerHTML).toContain('<img');
+					expect(mainDiv.children[1].children[1].lastChild.outerHTML).toContain('<img');
 					expect(catNames[0,1].style.textAlign).toBe('center');
 				});
 				it('creating a document fragment', () => {
@@ -105,12 +114,19 @@ setTimeout(function() {
 					figures[1].click();
 					expect(cat2ClickCount).toEqual(2);
 				});
-				it('displays the number of counts', () => {
-					expect();
+				it('displays the number of clicks', () => {
+					expect(cat1ClickField.textContent).toEqual('0');
+					figures[0].click();
+					expect(cat1ClickField.textContent).toEqual('1');
+					expect(cat2ClickField.textContent).toEqual('0');
+					figures[1].click();
+					expect(cat2ClickField.textContent).toEqual('1');
+
 				});
 				it('above each cat\'s picture <figcaption>', () => {
 					expect();
 				});
+				it('except when the number of clicks is zero, when the counter field is hidden');
 			});
 		});
 	})();
