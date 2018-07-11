@@ -14,9 +14,13 @@
 setTimeout(function() {
 	(function() {
 		describe('All code to be developed will be put in this suite, which will contain all the others', () => {
+
+			// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
 			const styleTag = document.createElement('style');
 			styleTag.innerHTML = '@media screen and (min-width: 960px) {main {flex-direction: row;}.catDiv {width: 40%; display: flex; align-content: space-around;}}';
 			document.head.appendChild(styleTag);
+
+			// Dyamically generates the HTML and CSS code, by manipulating the DOM
 			const bodyDom = document.querySelector('body');
 			const fragment = document.createDocumentFragment();
 			const mainDiv = document.createElement('main');
@@ -41,6 +45,18 @@ setTimeout(function() {
 			catNames.forEach(function(name) {
 				name.style.textAlign = 'center';
 			});
+
+			// Logic for incrementing the clicker count for each cat picture, upon click
+			const figures = document.querySelectorAll('figure');
+			let cat1ClickCount = 0;
+			let cat2ClickCount = 0;
+			figures[0].addEventListener("click", () => {
+				cat1ClickCount++;
+			});
+			figures[1].addEventListener("click", () => {
+				cat2ClickCount++;
+			});
+
 			describe('generates two cat pictures, by', () => {
 				it('creating a mainDiv', () => {
 					expect(mainDiv.outerHTML).toContain('main');
@@ -78,7 +94,16 @@ setTimeout(function() {
 			});
 			xdescribe('clicking each cat picture', () => {
 				it('increases the number of clicks at the counter', () => {
-					expect();
+					expect(cat1ClickCounter).toEqual(0);
+					catFigure[1].click();
+					expect(cat1ClickCounter).toEqual(1);
+					catFigure[1].click();
+					expect(cat1ClickCount).toEqual(2);
+					expect(cat2ClickCount).toEqual(0);
+					catFigure[1].click();
+					expect(cat2ClickCounter).toEqual(1);
+					catFigure[1].click();
+					expect(cat2ClickCounter).toEqual(2);
 				});
 				it('displays the number of counts', () => {
 					expect();
