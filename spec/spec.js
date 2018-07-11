@@ -92,18 +92,18 @@ setTimeout(function() {
 					expect(document.querySelectorAll('img')[0,1].style.height).toBe('90%');
 				});
 			});
-			xdescribe('clicking each cat picture', () => {
+			describe('clicking each cat picture', () => {
 				it('increases the number of clicks at the counter', () => {
-					expect(cat1ClickCounter).toEqual(0);
-					catFigure[1].click();
-					expect(cat1ClickCounter).toEqual(1);
-					catFigure[1].click();
+					expect(cat1ClickCount).toEqual(0);
+					figures[0].click();
+					expect(cat1ClickCount).toEqual(1);
+					figures[0].click();
 					expect(cat1ClickCount).toEqual(2);
 					expect(cat2ClickCount).toEqual(0);
-					catFigure[1].click();
-					expect(cat2ClickCounter).toEqual(1);
-					catFigure[1].click();
-					expect(cat2ClickCounter).toEqual(2);
+					figures[1].click();
+					expect(cat2ClickCount).toEqual(1);
+					figures[1].click();
+					expect(cat2ClickCount).toEqual(2);
 				});
 				it('displays the number of counts', () => {
 					expect();
