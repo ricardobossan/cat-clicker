@@ -21,7 +21,7 @@ const generate = (() => {
 
 	// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
 	const styleTag = document.createElement('style');
-	styleTag.innerHTML = '@media screen and (min-width: 960px) {main {flex-direction: row;}.catDiv {width: 40%; display: flex; align-content: space-around;}}';
+	styleTag.innerHTML = '@media screen and (min-width: 728px) {main {flex-direction: row;}.catDiv {width: 45%; display: flex; flex-direction: column; align-content: space-around;}}';
 	document.head.appendChild(styleTag);
 
 	// Dyamically generates the HTML and CSS code, by manipulating the DOM
@@ -36,7 +36,9 @@ const generate = (() => {
 	for(let i = 0; i < 2; i++) {
 		catDivs.push(document.createElement('div'));
 		displayCount.push(document.createElement('div'));
-		catFigures.push(`<figure><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
+		displayCount[i].textContent = '0 clicks';
+		displayCount[i].setAttribute("style", "text-align: center; visibility: hidden;");
+		catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
 		mainTag.appendChild(catDivs[i]);
 		catDivs[i].classList.add('catDiv');
 		mainTag.children[i].innerHTML = catFigures[i];
@@ -54,20 +56,19 @@ const generate = (() => {
 
 	// Logic for count clicks on each cat picture, upon click
 	const figures = document.querySelectorAll('figure');
-	console.log(figures);
 	let count1 = 0;
 	let count2 = 0;
-	catDivs[0].insertAdjacentHTML("afterbegin", displayCount[0].outerHTML);
-	catDivs[1].insertAdjacentHTML("afterbegin", displayCount[1].outerHTML);
-	let displayCount1 = catDivs[0].children[0];
-	let displayCount2 = catDivs[1].children[0];
+	catDivs[0].insertBefore(displayCount[0], figures[0]);
+	catDivs[1].insertBefore(displayCount[1], figures[1]);
 	figures[0].addEventListener("click", () => {
 		count1++;
-		displayCount1.textContent = count1;
+		displayCount[0].textContent = `${count1} clicks`;
+		displayCount[0].style.visibility = '';
 	});
 	figures[1].addEventListener("click", () => {
 		count2++;
-		displayCount2.textContent = count2;
+		displayCount[1].textContent = `${count2} clicks`;
+		displayCount[1].style.visibility = '';
 	});
 
 })();

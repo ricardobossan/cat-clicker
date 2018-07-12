@@ -16,59 +16,57 @@ setTimeout(function() {
 	(function() {
 		describe('All code to be developed will be put in this suite, which will contain all the others', () => {
 
-			// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
-			const styleTag = document.createElement('style');
-			styleTag.innerHTML = '@media screen and (min-width: 960px) {main {flex-direction: row;}.catDiv {width: 40%; display: flex; align-content: space-around;}}';
-			document.head.appendChild(styleTag);
+	// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
+	const styleTag = document.createElement('style');
+	styleTag.innerHTML = '@media screen and (min-width: 728px) {main {flex-direction: row;}.catDiv {width: 45%; display: flex; flex-direction: column; align-content: space-around;}}';
+	document.head.appendChild(styleTag);
 
-			// Dyamically generates the HTML and CSS code, by manipulating the DOM
-			const bodyDom = document.querySelector('body');
-			const fragment = document.createDocumentFragment();
-			const mainTag = document.createElement('main');
-			fragment.appendChild(mainTag);
-			mainTag.setAttribute("style", "display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%;");
-			let catDivs = [];
-			let catFigures = [];
-			let displayCount = [];
-			for(let i = 0; i < 2; i++) {
-				catDivs.push(document.createElement('div'));
-				displayCount.push(document.createElement('div'));
-				displayCount[i].textContent = '0 clicks';
-				displayCount[i].style.textAlign = 'center';
-				catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
-				mainTag.appendChild(catDivs[i]);
-				catDivs[i].classList.add('catDiv');
-				mainTag.children[i].innerHTML = catFigures[i];
-			}
-			bodyDom.appendChild(fragment);
-			bodyDom.setAttribute("style", "width: 100%;");
-			const imgs = document.querySelectorAll('img');
-			imgs.forEach(function(img) {
-				img.setAttribute("style", "width: 100%; height: 90%");
-			});
-			const catNames = document.querySelectorAll('figcaption');
-			catNames.forEach(function(name) {
-				name.style.textAlign = 'center';
-			});
+	// Dyamically generates the HTML and CSS code, by manipulating the DOM
+	const bodyDom = document.querySelector('body');
+	const fragment = document.createDocumentFragment();
+	const mainTag = document.createElement('main');
+	fragment.appendChild(mainTag);
+	mainTag.setAttribute("style", "display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%;");
+	let catDivs = [];
+	let catFigures = [];
+	let displayCount = [];
+	for(let i = 0; i < 2; i++) {
+		catDivs.push(document.createElement('div'));
+		displayCount.push(document.createElement('div'));
+		displayCount[i].textContent = '0 clicks';
+		displayCount[i].setAttribute("style", "text-align: center; visibility: hidden;");
+		catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
+		mainTag.appendChild(catDivs[i]);
+		catDivs[i].classList.add('catDiv');
+		mainTag.children[i].innerHTML = catFigures[i];
+	}
+	bodyDom.appendChild(fragment);
+	bodyDom.setAttribute("style", "width: 100%;");
+	const imgs = document.querySelectorAll('img');
+	imgs.forEach(function(img) {
+		img.setAttribute("style", "width: 100%; height: 90%");
+	});
+	const catNames = document.querySelectorAll('figcaption');
+	catNames.forEach(function(name) {
+		name.style.textAlign = 'center';
+	});
 
-			// Logic for count clicks on each cat picture, upon click
-			const figures = document.querySelectorAll('figure');
-			console.log(figures);
-			let count1 = 0;
-			let count2 = 0;
-
-			catDivs[0].insertBefore(displayCount[0], figures[0]);
-			catDivs[1].insertBefore(displayCount[1], figures[1]);
-/*			let displayCount1 = catDivs[0].children[0];
-			let displayCount2 = catDivs[1].children[0];
-*/			figures[0].addEventListener("click", () => {
-				count1++;
-				displayCount[0].textContent = `${count1} clicks`;
-			});
-			figures[1].addEventListener("click", () => {
-				count2++;
-				displayCount[1].textContent = `${count2} clicks`;
-			});
+	// Logic for count clicks on each cat picture, upon click
+	const figures = document.querySelectorAll('figure');
+	let count1 = 0;
+	let count2 = 0;
+	catDivs[0].insertBefore(displayCount[0], figures[0]);
+	catDivs[1].insertBefore(displayCount[1], figures[1]);
+	figures[0].addEventListener("click", () => {
+		count1++;
+		displayCount[0].textContent = `${count1} clicks`;
+		displayCount[0].style.visibility = '';
+	});
+	figures[1].addEventListener("click", () => {
+		count2++;
+		displayCount[1].textContent = `${count2} clicks`;
+		displayCount[1].style.visibility = '';
+	});
 
 			describe('generates two cat pictures, by', () => {
 				it('creating a mainTag', () => {
@@ -117,21 +115,49 @@ setTimeout(function() {
 					expect(count2).toBe(1);
 					figures[1].click();
 					expect(count2).toBe(2);
+					count1 = 0;
+					count2 = 0;
+					displayCount[0].style.visibility = 'hidden';
+					displayCount[1].style.visibility = 'hidden';
+
+					displayCount[0].textContent = '0 clicks';
+					displayCount[1].textContent = '0 clicks';
 				});
 				it('displays the number of clicks', () => {
-					expect(displayCount[0].textContent).toBe('2 clicks');
-					console.log(displayCount[0]);
+					expect(displayCount[0].textContent).toBe('0 clicks');
 					figures[0].click();
-					expect(displayCount[0].textContent).toBe('3 clicks');
-					expect(displayCount[1].textContent).toBe('2 clicks');
+					expect(displayCount[0].textContent).toBe('1 clicks');
+					expect(displayCount[1].textContent).toBe('0 clicks');
 					figures[1].click();
-					expect(displayCount[1].textContent).toBe('3 clicks');
+					expect(displayCount[1].textContent).toBe('1 clicks');
+					count1 = 0;
+					count2 = 0;
+					displayCount[0].style.visibility = 'hidden';
+					displayCount[1].style.visibility = 'hidden';
+
+					displayCount[0].textContent = '0 clicks';
+					displayCount[1].textContent = '0 clicks';
 
 				});
 				it('above each cat\'s picture <figcaption>', () => {
-					expect();
+					expect(catDivs[0].children[0].textContent).toBe(`${count1} clicks`);
+					expect(catDivs[1].children[0].textContent).toBe(`${count2} clicks`);
 				});
-				it('except when the number of clicks is zero, when the counter field is hidden');
+				it('except when the number of clicks is zero, when the counter field is hidden', () => {
+					expect(displayCount[0].style.visibility).toBe('hidden');
+					expect(displayCount[1].style.visibility).toBe('hidden');
+					figures[0].click();
+					figures[1].click();
+					expect(displayCount[0].style.visibility).toBe('');
+					expect(displayCount[1].style.visibility).toBe('');
+					count1 = 0;
+					count2 = 0;
+					displayCount[0].style.visibility = 'hidden';
+					displayCount[1].style.visibility = 'hidden';
+
+					displayCount[0].textContent = '0 clicks';
+					displayCount[1].textContent = '0 clicks';
+				});
 			});
 		});
 	})();
