@@ -73,15 +73,11 @@ setTimeout(function() {
 				displayCount[1].style.visibility = '';
 			});
 
-			describe('generates five cat pictures, by', () => {
+			describe('generates cat pictures, by', () => {
 				it('creating a mainTag', () => {
 					expect(mainTag.outerHTML).toContain('main');
 				});
-				it('create two divs inside the mainTag', () => {
-					expect(mainTag.children[0].outerHTML).toContain('<div');
-					expect(mainTag.children[1].outerHTML).toContain('<div');
-				});
-				it('divide the mainTag by half it\'s width', () => {
+				it('spliting the mainTag in two divs, by half it\'s width', () => {
 					expect(mainTag.children[0].style.width).toEqual(mainTag.style.width/2);
 				});
 				describe('mainTag.children[0] should be', () => {
@@ -114,6 +110,36 @@ setTimeout(function() {
 					expect(mainTag.children[0].children[4].children[1].lastChild.outerHTML).toContain('<img');
 					expect(catNames[0,1,2,3,4].style.textAlign).toBe('center');
 				});
+				describe('create the area to display the selected cat image on the second div of the mainTag, displaying', () => {
+					describe('the unique', () => {
+						it('unique', () => {
+							expect(catNames).toBe(jasmine.any(Set));
+						});
+						it('cat\'s name', () => {
+							expect(catNames[0]).notToBe(null);
+							expect(catNames[0]).toBe(jasmine.any(String));
+							expect(catNames[1]).notToBe(null);
+							expect(catNames[1]).toBe(jasmine.any(String));
+							expect(catNames[2]).notToBe(null);
+							expect(catNames[2]).toBe(jasmine.any(String));
+							expect(catNames[3]).notToBe(null);
+							expect(catNames[3]).toBe(jasmine.any(String));
+							expect(catNames[4]).notToBe(null);
+							expect(catNames[4]).toBe(jasmine.any(String));
+						});
+					});
+					it('image', () => {
+						expect()
+					});
+					it('and number of clicks', () => {
+						expect()
+					});
+					it('all centered', () => {
+						expect()
+					});
+				});
+			});
+			describe('Append the generated HTML to the main tag by', () => {
 				it('creating a document fragment', () => {
 					expect(fragment.toString()).toBe('[object DocumentFragment]');
 				});
