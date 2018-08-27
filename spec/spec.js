@@ -5,6 +5,16 @@
  */
 
 /**
+ *@func returns variable displayCount to _0_, and it's visibility to _hidden_
+ */
+const resetDisplayCount = () => {
+	displayCount.forEach(function(displayed) {
+		displayed.style.visibility = 'hidden';
+		displayed.textContent = '0 clicks';
+	});
+};
+
+/**
  * @desc Encapsulated the whole code for the tests inside a `setTimeout()` method, with an empty delay, so that the DOM would already have loaded when
  */
 setTimeout(function() {
@@ -63,39 +73,52 @@ setTimeout(function() {
 				displayCount[1].style.visibility = '';
 			});
 
-			describe('generates two cat pictures, by', () => {
+			describe('generates five cat pictures, by', () => {
 				it('creating a mainTag', () => {
 					expect(mainTag.outerHTML).toContain('main');
 				});
-				it('creating two divs inside the mainTag', () => {
+				it('create two divs inside the mainTag', () => {
 					expect(mainTag.children[0].outerHTML).toContain('<div');
 					expect(mainTag.children[1].outerHTML).toContain('<div');
 				});
-				it('making each div contain a <figure> for each cat pic', () => {
-					expect(mainTag.children[0].outerHTML).toContain('<figure');
-					expect(mainTag.children[1].outerHTML).toContain('<figure');
+				it('divide the mainTag by half it\'s width', () => {
+					expect(mainTag.children[0].style.width).toEqual(mainTag.style.width/2);
+				});
+				describe('mainTag.children[0] should be', () => {
+					it('sliced in 5 divs', () => {
+						expect(mainTag.querySelectorAll('div').length).toEqual(5);
+					});
+					it('on top of each other, using css grid or flexbox', () => {
+						expect(mainTag.children[0].style.display).toBe('flex');
+						expect(mainTag.children[0].style.flexWrap).toBe('wrap');
+						expect(document.querySelectorAll('img')[0,1,2,3,4].style.height).toBe('80%');
+					});
+				});
+				it('each cat should have the correct <figure> element', () => {
+					expect(mainTag.children[0].children[0].outerHTML).toContain(figures[0]);
+					expect(mainTag.children[0].children[1].outerHTML).toContain(figures[1]);
+					expect(mainTag.children[0].children[2].outerHTML).toContain(figures[2]);
+					expect(mainTag.children[0].children[3].outerHTML).toContain(figures[3]);
+					expect(mainTag.children[0].children[4].outerHTML).toContain(figures[4]);
 				});
 				it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
-					expect(mainTag.children[0].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[1].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[1].lastChild.outerHTML).toContain('<img');
-					expect(mainTag.children[1].children[1].lastChild.outerHTML).toContain('<img');
-					expect(catNames[0,1].style.textAlign).toBe('center');
+					expect(mainTag.children[0].children[0].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainTag.children[0].children[0].children[1].lastChild.outerHTML).toContain('<img');
+					expect(mainTag.children[0].children[1].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainTag.children[0].children[1].children[1].lastChild.outerHTML).toContain('<img');
+					expect(mainTag.children[0].children[2].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainTag.children[0].children[2].children[1].lastChild.outerHTML).toContain('<img');
+					expect(mainTag.children[0].children[3].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainTag.children[0].children[3].children[1].lastChild.outerHTML).toContain('<img');
+					expect(mainTag.children[0].children[4].children[1].firstChild.outerHTML).toContain('<figcaption');
+					expect(mainTag.children[0].children[4].children[1].lastChild.outerHTML).toContain('<img');
+					expect(catNames[0,1,2,3,4].style.textAlign).toBe('center');
 				});
 				it('creating a document fragment', () => {
 					expect(fragment.toString()).toBe('[object DocumentFragment]');
 				});
 				it('attaching the document fragment in the body', () => {
 					expect(document.querySelector('main')).not.toBe(null);
-				});
-			});
-			describe('piles the cat pictures on top of each other,', () => {
-				it('using CSS grid or flexbox', () => {
-					expect(document.querySelector('body').style.width).toEqual('100%');
-					expect(mainTag.style.width).toBe('100%');
-					expect(mainTag.style.display).toBe('flex');
-					expect(mainTag.style.flexWrap).toBe('wrap');
-					expect(document.querySelectorAll('img')[0,1].style.height).toBe('90%');
 				});
 			});
 			describe('clicking each cat picture', () => {
@@ -110,14 +133,43 @@ setTimeout(function() {
 					expect(count2).toBe(1);
 					figures[1].click();
 					expect(count2).toBe(2);
+					expect(count3).toBe(0);
+					figures[2].click();
+					expect(count3).toBe(1);
+					figures[2].click();
+					expect(count3).toBe(2);
+					expect(count4).toBe(0);
+					figures[3].click();
+					expect(count4).toBe(1);
+					figures[3].click();
+					expect(count4).toBe(2);
+					expect(count5).toBe(0);
+					figures[4].click();
+					expect(count5).toBe(1);
+					figures[4].click();
+					expect(count5).toBe(2);
+
 					count1 = 0;
 					count2 = 0;
+					count3 = 0;
+					count4 = 0;
+					count5 = 0;
+
+					resetDisplayCount();
+
+/*
 					displayCount[0].style.visibility = 'hidden';
 					displayCount[1].style.visibility = 'hidden';
+					displayCount[2].style.visibility = 'hidden';
+					displayCount[3].style.visibility = 'hidden';
+					displayCount[4].style.visibility = 'hidden';
 
 					displayCount[0].textContent = '0 clicks';
 					displayCount[1].textContent = '0 clicks';
-				});
+					displayCount[2].textContent = '0 clicks';
+					displayCount[3].textContent = '0 clicks';
+					displayCount[4].textContent = '0 clicks';
+*/				});
 				it('displays the number of clicks', () => {
 					expect(displayCount[0].textContent).toBe('0 clicks');
 					figures[0].click();
@@ -125,33 +177,55 @@ setTimeout(function() {
 					expect(displayCount[1].textContent).toBe('0 clicks');
 					figures[1].click();
 					expect(displayCount[1].textContent).toBe('1 clicks');
+					expect(displayCount[2].textContent).toBe('0 clicks');
+					figures[2].click();
+					expect(displayCount[2].textContent).toBe('1 clicks');
+					expect(displayCount[3].textContent).toBe('0 clicks');
+					figures[3].click();
+					expect(displayCount[3].textContent).toBe('1 clicks');
+					expect(displayCount[4].textContent).toBe('0 clicks');
+					figures[4].click();
+					expect(displayCount[4].textContent).toBe('1 clicks');
+
 					count1 = 0;
 					count2 = 0;
-					displayCount[0].style.visibility = 'hidden';
-					displayCount[1].style.visibility = 'hidden';
+					count3 = 0;
+					count4 = 0;
+					count5 = 0;
 
-					displayCount[0].textContent = '0 clicks';
-					displayCount[1].textContent = '0 clicks';
-
+					resetDisplayCount();
 				});
 				it('above each cat\'s picture <figcaption>', () => {
 					expect(catDivs[0].children[0].textContent).toBe(`${count1} clicks`);
 					expect(catDivs[1].children[0].textContent).toBe(`${count2} clicks`);
+					expect(catDivs[2].children[0].textContent).toBe(`${count2} clicks`);
+					expect(catDivs[3].children[0].textContent).toBe(`${count2} clicks`);
+					expect(catDivs[4].children[0].textContent).toBe(`${count2} clicks`);
 				});
 				it('except when the number of clicks is zero, when the counter field is hidden', () => {
 					expect(displayCount[0].style.visibility).toBe('hidden');
 					expect(displayCount[1].style.visibility).toBe('hidden');
+					expect(displayCount[2].style.visibility).toBe('hidden');
+					expect(displayCount[3].style.visibility).toBe('hidden');
+					expect(displayCount[4].style.visibility).toBe('hidden');
 					figures[0].click();
 					figures[1].click();
+					figures[2].click();
+					figures[3].click();
+					figures[4].click();
 					expect(displayCount[0].style.visibility).toBe('');
 					expect(displayCount[1].style.visibility).toBe('');
+					expect(displayCount[3].style.visibility).toBe('');
+					expect(displayCount[4].style.visibility).toBe('');
+					expect(displayCount[5].style.visibility).toBe('');
+
 					count1 = 0;
 					count2 = 0;
-					displayCount[0].style.visibility = 'hidden';
-					displayCount[1].style.visibility = 'hidden';
+					count3 = 0;
+					count4 = 0;
+					count5 = 0;
 
-					displayCount[0].textContent = '0 clicks';
-					displayCount[1].textContent = '0 clicks';
+					resetDisplayCount();
 				});
 			});
 		});
