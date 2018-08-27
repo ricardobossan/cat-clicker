@@ -40,7 +40,7 @@ const generate = (() => {
 		catDivs[i].classList.add('catDiv');
 		mainTag.children[i].innerHTML = catFigures[i];
 	}
-	bodyDom.appendChild(fragment);
+	document.getElementsByTagName('body')[0].appendChild(fragment);
 	bodyDom.setAttribute("style", "width: 100%;");
 	const imgs = document.querySelectorAll('img');
 	imgs.forEach(function(img) {
