@@ -5,51 +5,74 @@
  */
 
 /**
- *@func returns variable displayCount to _0_, and it's visibility to _hidden_
- */
-const resetDisplayCount = () => {
-	displayCount.forEach(function(displayed) {
-		displayed.style.visibility = 'hidden';
-		displayed.textContent = '0 clicks';
-	});
-};
-
-/**
  * @desc Encapsulated the whole code for the tests inside a `setTimeout()` method, with an empty delay, so that the DOM would already have loaded when
  */
 setTimeout(function() {
 	(function() {
 		describe('All code to be developed will be put in this suite, which will contain all the others', () => {
-
+/*
 			// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
 			const styleTag = document.createElement('style');
 			styleTag.innerHTML = '@media screen and (min-width: 728px) {main {flex-direction: row;}.catDiv {width: 45%; display: flex; flex-direction: column; align-content: space-around;}}';
 			document.head.appendChild(styleTag);
+*/
+
+			/**
+			 * @func returns variable displayCount to _0_, and it's visibility to _hidden_
+			 * @todo REMOVE FROM DISTRIBUTION CODE
+			 */
+			const resetDisplayCount = () => {
+				count1 = 0;
+				count2 = 0;
+				count3 = 0;
+				count4 = 0;
+				count5 = 0;
+				console.log(count1);
+
+				displayCatFigure.innerHTML = '';
+			};
+
+
 
 			// Dyamically generates the HTML and CSS code, by manipulating the DOM
 			const bodyDom = document.querySelector('body');
 			const fragment = document.createDocumentFragment();
 			const mainTag = document.createElement('main');
 			fragment.appendChild(mainTag);
-			mainTag.setAttribute("style", "display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%;");
+			mainTag.setAttribute("style", "display: flex; flex-direction: row; justify-content: space-around; width: 100%;");
+			const leftDiv = document.createElement('div');
+			const rightDiv = document.createElement('div');
+			mainTag.appendChild(leftDiv);
+			mainTag.appendChild(rightDiv);
+			leftDiv.setAttribute("style", "display: flex; flex-direction: column; width: 31.25%; height: 100vh; background-color: silver;");
+			rightDiv.setAttribute("style", "display: flex; justify-content: center; align-items: center; width: 68.75%; height: 100vh; background-color: silver;");
 			let catDivs = [];
 			let catFigures = [];
 			let displayCount = [];
-			for(let i = 0; i < 2; i++) {
+			for(let i = 0; i < 5; i++) {
 				catDivs.push(document.createElement('div'));
-				displayCount.push(document.createElement('div'));
+/*				displayCount.push(document.createElement('div'));
 				displayCount[i].textContent = '0 clicks';
 				displayCount[i].setAttribute("style", "text-align: center; visibility: hidden;");
-				catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
-				mainTag.appendChild(catDivs[i]);
+*/				catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
+				leftDiv.appendChild(catDivs[i]);
 				catDivs[i].classList.add('catDiv');
-				mainTag.children[i].innerHTML = catFigures[i];
+				catDivs[i].setAttribute("style", "margin: auto; width: 60%");
+				leftDiv.children[i].innerHTML = catFigures[i];
 			}
+
+			// Display selected cat picture
+			const displayCatBox = document.createElement('div');
+			displayCatBox.setAttribute("style", "display: flex; flex-direction: column; justify-content: center; align-items: center; width: 80%; height: 80%; border: 1px red; background-color: yellow; text-align: center");
+			displayCatBox.textContent = "Click on a cat name to display its picture!";
+			const displayCatFigure = document.createElement('figure');
+			rightDiv.appendChild(displayCatBox);
+
 			bodyDom.appendChild(fragment);
-			bodyDom.setAttribute("style", "width: 100%;");
+			bodyDom.setAttribute("style", "width: 100%; margin: 0");
 			const imgs = document.querySelectorAll('img');
 			imgs.forEach(function(img) {
-				img.setAttribute("style", "width: 100%; height: 90%");
+				img.setAttribute("style", "width: 100%; height: 80%");
 			});
 			const catNames = document.querySelectorAll('figcaption');
 			catNames.forEach(function(name) {
@@ -57,16 +80,33 @@ setTimeout(function() {
 			});
 
 			// Logic for count clicks on each cat picture, upon click
-			const figures = document.querySelectorAll('figure');
+			const figures = document.querySelectorAll('.catDiv');
 			let count1 = 0;
 			let count2 = 0;
+			let count3 = 0;
+			let count4 = 0;
+			let count5 = 0;
+/*
 			catDivs[0].insertBefore(displayCount[0], figures[0]);
 			catDivs[1].insertBefore(displayCount[1], figures[1]);
+
+*/
+			/*
+			 * @func displays selected cat name, image and number of clicks, when called inside an event listener
+			 */
+			const catCaller = () => {
+				displayCatFigure.setAttribute("style", "max-width: 70%");
+				displayCatFigure.innerHTML = "<figcaption>Cat 1</figcaption><img src='images/cat3.jpg' alt='Cat 1' />"  /*`<figcaption>Cat ${selectedCatNumber}</figcaption><img src="images/${catselectedCatNumber}" alt="Cat ${selectedCatNumber}" />`*/;
+				displayCatBox.appendChild(displayCatFigure);
+			};
+
 			figures[0].addEventListener("click", () => {
 				count1++;
-				displayCount[0].textContent = `${count1} clicks`;
+				console.log(count1);
+				catCaller();
+/*				displayCount[0].textContent = `${count1} clicks`;
 				displayCount[0].style.visibility = '';
-			});
+*/			});
 			figures[1].addEventListener("click", () => {
 				count2++;
 				displayCount[1].textContent = `${count2} clicks`;
@@ -78,7 +118,7 @@ setTimeout(function() {
 					expect(mainTag.outerHTML).toContain('main');
 				});
 				it('spliting the mainTag in two divs, by half it\'s width', () => {
-					expect(mainTag.children[0].style.width).toEqual(mainTag.style.width/2);
+					expect(mainTag.children[0].style.width).toEqual(mainTag.style.width/3.2);
 				});
 				describe('mainTag.children[0] should be', () => {
 					it('sliced in 5 divs', () => {
@@ -110,32 +150,74 @@ setTimeout(function() {
 					expect(mainTag.children[0].children[4].children[1].lastChild.outerHTML).toContain('<img');
 					expect(catNames[0,1,2,3,4].style.textAlign).toBe('center');
 				});
-				describe('create the area to display the selected cat image on the second div of the mainTag, displaying', () => {
-					describe('the unique', () => {
-						it('unique', () => {
-							expect(catNames).toBe(jasmine.any(Set));
-						});
-						it('cat\'s name', () => {
-							expect(catNames[0]).notToBe(null);
-							expect(catNames[0]).toBe(jasmine.any(String));
-							expect(catNames[1]).notToBe(null);
-							expect(catNames[1]).toBe(jasmine.any(String));
-							expect(catNames[2]).notToBe(null);
-							expect(catNames[2]).toBe(jasmine.any(String));
-							expect(catNames[3]).notToBe(null);
-							expect(catNames[3]).toBe(jasmine.any(String));
-							expect(catNames[4]).notToBe(null);
-							expect(catNames[4]).toBe(jasmine.any(String));
-						});
+				describe('create the area to display the selected cat image on the second div of the mainTag, displaying the cat\'s', () => {
+					it('unique', () => {
+						expect(catNames).toBe(jasmine.any(Set));
+						expect(imgs).toBe(jasmine.any(Set));
+					});
+					it('name', () => {
+						expect(catNames[0]).not.toBe(null);
+						expect(catNames[0]).toBe(jasmine.any(String));
+						expect(catNames[1]).not.toBe(null);
+						expect(catNames[1]).toBe(jasmine.any(String));
+						expect(catNames[2]).not.toBe(null);
+						expect(catNames[2]).toBe(jasmine.any(String));
+						expect(catNames[3]).not.toBe(null);
+						expect(catNames[3]).toBe(jasmine.any(String));
+						expect(catNames[4]).not.toBe(null);
+						expect(catNames[4]).toBe(jasmine.any(String));
 					});
 					it('image', () => {
-						expect()
+						expect(imgs[0]).not.toBe(null);
+						expect(imgs[0]).toBe(jasmine.any(String));
+						expect(imgs[0]).toContain('cat');
+						expect(imgs[1]).not.toBe(null);
+						expect(imgs[1]).toBe(jasmine.any(String));
+						expect(imgs[1]).toContain('cat');
+						expect(imgs[2]).not.toBe(null);
+						expect(imgs[2]).toBe(jasmine.any(String));
+						expect(imgs[2]).toContain('cat');
+						expect(imgs[3]).not.toBe(null);
+						expect(imgs[3]).toBe(jasmine.any(String));
+						expect(imgs[3]).toContain('cat');
+						expect(imgs[4]).not.toBe(null);
+						expect(imgs[4]).toBe(jasmine.any(String));
+						expect(imgs[4]).toContain('cat');
 					});
 					it('and number of clicks', () => {
-						expect()
+						expect(count1).toEqual(0);
+						count1.click();
+						expect(count1).toEqual(1);
+						count1.click();
+						expect(count1).toEqual(2);
+						expect(count2).toEqual(0);
+						count2.click();
+						expect(count2).toEqual(1);
+						count2.click();
+						expect(count2).toEqual(2);
+						expect(count3).toEqual(0);
+						count3.click();
+						expect(count3).toEqual(1);
+						count3.click();
+						expect(count3).toEqual(2);
+						expect(count4).toEqual(0);
+						count4.click();
+						expect(count4).toEqual(1);
+						count4.click();
+						expect(count4).toEqual(2);
+						expect(count5).toEqual(0);
+						count5.click();
+						expect(count5).toEqual(1);
+						count5.click();
+						expect(count5).toEqual(2);
+
+						resetDisplayCount();
+
 					});
 					it('all centered', () => {
-						expect()
+						expect(mainTag.children[1].style.display).toBe('flex');
+						expect(mainTag.children[1].style.justifyContent).toBe('center');
+						expect(mainTag.children[1].style.alignItems).toBe('center');
 					});
 				});
 			});
@@ -175,12 +257,6 @@ setTimeout(function() {
 					figures[4].click();
 					expect(count5).toBe(2);
 
-					count1 = 0;
-					count2 = 0;
-					count3 = 0;
-					count4 = 0;
-					count5 = 0;
-
 					resetDisplayCount();
 
 /*
@@ -213,12 +289,6 @@ setTimeout(function() {
 					figures[4].click();
 					expect(displayCount[4].textContent).toBe('1 clicks');
 
-					count1 = 0;
-					count2 = 0;
-					count3 = 0;
-					count4 = 0;
-					count5 = 0;
-
 					resetDisplayCount();
 				});
 				it('above each cat\'s picture <figcaption>', () => {
@@ -244,12 +314,6 @@ setTimeout(function() {
 					expect(displayCount[3].style.visibility).toBe('');
 					expect(displayCount[4].style.visibility).toBe('');
 					expect(displayCount[5].style.visibility).toBe('');
-
-					count1 = 0;
-					count2 = 0;
-					count3 = 0;
-					count4 = 0;
-					count5 = 0;
 
 					resetDisplayCount();
 				});
