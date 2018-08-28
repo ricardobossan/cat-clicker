@@ -2,6 +2,9 @@
  * @file This file has tests for the app.js file.
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
+ *
+ * @todo create algoritm to loop for each catDiv, adding a list of count, for each cat picture, and then creating a variable to asign with each click, as well as a add event listener, for each catDiv, in this very same loop
+ *
  */
 
 /**
@@ -80,39 +83,50 @@ setTimeout(function() {
 			});
 
 			// Logic for count clicks on each cat picture, upon click
-			const figures = document.querySelectorAll('.catDiv');
+			const catDiv = document.querySelectorAll('.catDiv');
+			console.log(catDiv);
 			let count1 = 0;
 			let count2 = 0;
 			let count3 = 0;
 			let count4 = 0;
 			let count5 = 0;
 /*
-			catDivs[0].insertBefore(displayCount[0], figures[0]);
-			catDivs[1].insertBefore(displayCount[1], figures[1]);
+			catDivs[0].insertBefore(displayCount[0], catDiv[0]);
+			catDivs[1].insertBefore(displayCount[1], catDiv[1]);
 
 */
 			/*
 			 * @func displays selected cat name, image and number of clicks, when called inside an event listener
 			 */
+			let selectedCatNumber = 0;
 			const catCaller = () => {
 				displayCatFigure.setAttribute("style", "max-width: 70%");
-				displayCatFigure.innerHTML = "<figcaption>Cat 1</figcaption><img src='images/cat3.jpg' alt='Cat 1' />"  /*`<figcaption>Cat ${selectedCatNumber}</figcaption><img src="images/${catselectedCatNumber}" alt="Cat ${selectedCatNumber}" />`*/;
+				displayCatFigure.innerHTML =/* "<figcaption>Cat 1</figcaption><img src='images/cat3.jpg' alt='Cat 1' />"*/  `<figcaption>Cat ${selectedCatNumber}</figcaption><img src="images/cat${selectedCatNumber}.jpg" alt="Cat ${selectedCatNumber}" />`;
 				displayCatBox.appendChild(displayCatFigure);
 			};
 
-			figures[0].addEventListener("click", () => {
+			clickCount = [0,0,0,0,0];
+			catDiv.forEach(function(cat, index){
+				cat.addEventListener("click", () => {
+					clickCount[index]++;
+					selectedCatNumber = index + 1;
+					catCaller();
+				});
+			});
+/*
+			catDiv[0].addEventListener("click", () => {
 				count1++;
 				console.log(count1);
 				catCaller();
-/*				displayCount[0].textContent = `${count1} clicks`;
-				displayCount[0].style.visibility = '';
-*/			});
-			figures[1].addEventListener("click", () => {
-				count2++;
-				displayCount[1].textContent = `${count2} clicks`;
-				displayCount[1].style.visibility = '';
+//				displayCount[0].textContent = `${count1} clicks`;
+//				displayCount[0].style.visibility = '';
 			});
-
+			catDiv[1].addEventListener("click", () => {
+				count2++;
+//				displayCount[1].textContent = `${count2} clicks`;
+//				displayCount[1].style.visibility = '';
+			});
+*/
 			describe('generates cat pictures, by', () => {
 				it('creating a mainTag', () => {
 					expect(mainTag.outerHTML).toContain('main');
@@ -131,11 +145,11 @@ setTimeout(function() {
 					});
 				});
 				it('each cat should have the correct <figure> element', () => {
-					expect(mainTag.children[0].children[0].outerHTML).toContain(figures[0]);
-					expect(mainTag.children[0].children[1].outerHTML).toContain(figures[1]);
-					expect(mainTag.children[0].children[2].outerHTML).toContain(figures[2]);
-					expect(mainTag.children[0].children[3].outerHTML).toContain(figures[3]);
-					expect(mainTag.children[0].children[4].outerHTML).toContain(figures[4]);
+					expect(mainTag.children[0].children[0].outerHTML).toContain(catDiv[0]);
+					expect(mainTag.children[0].children[1].outerHTML).toContain(catDiv[1]);
+					expect(mainTag.children[0].children[2].outerHTML).toContain(catDiv[2]);
+					expect(mainTag.children[0].children[3].outerHTML).toContain(catDiv[3]);
+					expect(mainTag.children[0].children[4].outerHTML).toContain(catDiv[4]);
 				});
 				it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
 					expect(mainTag.children[0].children[0].children[1].firstChild.outerHTML).toContain('<figcaption');
@@ -232,29 +246,29 @@ setTimeout(function() {
 			describe('clicking each cat picture', () => {
 				it('increases the number of clicks at the counter', () => {
 					expect(count1).toBe(0);
-					figures[0].click();
+					catDiv[0].click();
 					expect(count1).toBe(1);
-					figures[0].click();
+					catDiv[0].click();
 					expect(count1).toBe(2);
 					expect(count2).toBe(0);
-					figures[1].click();
+					catDiv[1].click();
 					expect(count2).toBe(1);
-					figures[1].click();
+					catDiv[1].click();
 					expect(count2).toBe(2);
 					expect(count3).toBe(0);
-					figures[2].click();
+					catDiv[2].click();
 					expect(count3).toBe(1);
-					figures[2].click();
+					catDiv[2].click();
 					expect(count3).toBe(2);
 					expect(count4).toBe(0);
-					figures[3].click();
+					catDiv[3].click();
 					expect(count4).toBe(1);
-					figures[3].click();
+					catDiv[3].click();
 					expect(count4).toBe(2);
 					expect(count5).toBe(0);
-					figures[4].click();
+					catDiv[4].click();
 					expect(count5).toBe(1);
-					figures[4].click();
+					catDiv[4].click();
 					expect(count5).toBe(2);
 
 					resetDisplayCount();
@@ -274,19 +288,19 @@ setTimeout(function() {
 */				});
 				it('displays the number of clicks', () => {
 					expect(displayCount[0].textContent).toBe('0 clicks');
-					figures[0].click();
+					catDiv[0].click();
 					expect(displayCount[0].textContent).toBe('1 clicks');
 					expect(displayCount[1].textContent).toBe('0 clicks');
-					figures[1].click();
+					catDiv[1].click();
 					expect(displayCount[1].textContent).toBe('1 clicks');
 					expect(displayCount[2].textContent).toBe('0 clicks');
-					figures[2].click();
+					catDiv[2].click();
 					expect(displayCount[2].textContent).toBe('1 clicks');
 					expect(displayCount[3].textContent).toBe('0 clicks');
-					figures[3].click();
+					catDiv[3].click();
 					expect(displayCount[3].textContent).toBe('1 clicks');
 					expect(displayCount[4].textContent).toBe('0 clicks');
-					figures[4].click();
+					catDiv[4].click();
 					expect(displayCount[4].textContent).toBe('1 clicks');
 
 					resetDisplayCount();
@@ -304,11 +318,11 @@ setTimeout(function() {
 					expect(displayCount[2].style.visibility).toBe('hidden');
 					expect(displayCount[3].style.visibility).toBe('hidden');
 					expect(displayCount[4].style.visibility).toBe('hidden');
-					figures[0].click();
-					figures[1].click();
-					figures[2].click();
-					figures[3].click();
-					figures[4].click();
+					catDiv[0].click();
+					catDiv[1].click();
+					catDiv[2].click();
+					catDiv[3].click();
+					catDiv[4].click();
 					expect(displayCount[0].style.visibility).toBe('');
 					expect(displayCount[1].style.visibility).toBe('');
 					expect(displayCount[3].style.visibility).toBe('');
