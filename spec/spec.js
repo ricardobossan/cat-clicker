@@ -25,11 +25,6 @@ setTimeout(function() {
 			 * @todo REMOVE FROM DISTRIBUTION CODE
 			 */
 			const resetDisplayCount = () => {
-				count1 = 0;
-				count2 = 0;
-				count3 = 0;
-				count4 = 0;
-				count5 = 0;
 				console.log(count1);
 
 				displayCatFigure.innerHTML = '';
@@ -69,6 +64,7 @@ setTimeout(function() {
 			displayCatBox.setAttribute("style", "display: flex; flex-direction: column; justify-content: center; align-items: center; width: 80%; height: 80%; border: 1px red; background-color: yellow; text-align: center");
 			displayCatBox.textContent = "Click on a cat name to display its picture!";
 			const displayCatFigure = document.createElement('figure');
+			const displayCatClicks = document.createElement('div');
 			rightDiv.appendChild(displayCatBox);
 
 			bodyDom.appendChild(fragment);
@@ -85,11 +81,6 @@ setTimeout(function() {
 			// Logic for count clicks on each cat picture, upon click
 			const catDiv = document.querySelectorAll('.catDiv');
 			console.log(catDiv);
-			let count1 = 0;
-			let count2 = 0;
-			let count3 = 0;
-			let count4 = 0;
-			let count5 = 0;
 /*
 			catDivs[0].insertBefore(displayCount[0], catDiv[0]);
 			catDivs[1].insertBefore(displayCount[1], catDiv[1]);
@@ -99,10 +90,12 @@ setTimeout(function() {
 			 * @func displays selected cat name, image and number of clicks, when called inside an event listener
 			 */
 			let selectedCatNumber = 0;
-			const catCaller = () => {
+			const catCaller = (i) => {
 				displayCatFigure.setAttribute("style", "max-width: 70%");
-				displayCatFigure.innerHTML =/* "<figcaption>Cat 1</figcaption><img src='images/cat3.jpg' alt='Cat 1' />"*/  `<figcaption>Cat ${selectedCatNumber}</figcaption><img src="images/cat${selectedCatNumber}.jpg" alt="Cat ${selectedCatNumber}" />`;
+				displayCatFigure.innerHTML = `<figcaption>Cat ${selectedCatNumber}</figcaption><img style="max-width: 100%" src="images/cat${selectedCatNumber}.jpg" alt="Cat ${selectedCatNumber}" />`;
+				displayCatClicks.textContent = `This cat was clicked ${clickCount[i]} times`;
 				displayCatBox.appendChild(displayCatFigure);
+				displayCatBox.appendChild(displayCatClicks);
 			};
 
 			clickCount = [0,0,0,0,0];
@@ -110,7 +103,9 @@ setTimeout(function() {
 				cat.addEventListener("click", () => {
 					clickCount[index]++;
 					selectedCatNumber = index + 1;
-					catCaller();
+					catCaller(index);
+					console.log(clickCount);
+					return index;
 				});
 			});
 /*
