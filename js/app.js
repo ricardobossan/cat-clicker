@@ -16,35 +16,40 @@
 	 */
 const generate = (() => {
 
-	// Dynamically generates a breakpoint in the <head> tag, at 960px, for displaying the cat images side by side
-	const styleTag = document.createElement('style');
-	styleTag.innerHTML = '@media screen and (min-width: 728px) {main {flex-direction: row;}.catDiv {width: 45%; display: flex; flex-direction: column; align-content: space-around;}}';
-	document.head.appendChild(styleTag);
-
 	// Dyamically generates the HTML and CSS code, by manipulating the DOM
 	const bodyDom = document.querySelector('body');
 	const fragment = document.createDocumentFragment();
 	const mainTag = document.createElement('main');
 	fragment.appendChild(mainTag);
-	mainTag.setAttribute("style", "display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%;");
+	mainTag.setAttribute("style", "display: flex; flex-direction: row; justify-content: space-around; width: 100%;");
+	const leftDiv = document.createElement('div');
+	const rightDiv = document.createElement('div');
+	mainTag.appendChild(leftDiv);
+	mainTag.appendChild(rightDiv);
+	leftDiv.setAttribute("style", "overflow: scroll; display: flex; flex-direction: column; width: 31.25%; height: 100vh; background-color: silver;");
+	rightDiv.setAttribute("style", "display: flex; justify-content: center; align-items: center; width: 68.75%; height: 100vh; background-color: silver;");
 	let catDivs = [];
 	let catFigures = [];
-	let displayCount = [];
-	for(let i = 0; i < 2; i++) {
+	for(let i = 0; i < 5; i++) {
 		catDivs.push(document.createElement('div'));
-		displayCount.push(document.createElement('div'));
-		displayCount[i].textContent = '0 clicks';
-		displayCount[i].setAttribute("style", "text-align: center; visibility: hidden;");
 		catFigures.push(`<figure style="margin-top: 3px"><figcaption>Cat ${i+1}</figcaption><img src="images/cat${i+1}.jpg" alt="Cat ${i+1}"/></figure>`);
-		mainTag.appendChild(catDivs[i]);
+		leftDiv.appendChild(catDivs[i]);
 		catDivs[i].classList.add('catDiv');
-		mainTag.children[i].innerHTML = catFigures[i];
+		catDivs[i].setAttribute("style", "margin: auto; width: 60%");
+		leftDiv.children[i].innerHTML = catFigures[i];
 	}
-	document.getElementsByTagName('body')[0].appendChild(fragment);
-	bodyDom.setAttribute("style", "width: 100%;");
+
+	// Display selected cat picture
+	const displayCatBox = document.createElement('div');
+	displayCatBox.setAttribute("style", "display: flex; flex-direction: column; justify-content: center; align-items: center; width: 80%; height: 80%; border: 1px red; background-color: yellow; text-align: center");
+	displayCatBox.textContent = "Click on a cat name to display its picture!";
+	rightDiv.appendChild(displayCatBox);
+
+	bodyDom.appendChild(fragment);
+	bodyDom.setAttribute("style", "width: 100%; margin: 0");
 	const imgs = document.querySelectorAll('img');
 	imgs.forEach(function(img) {
-		img.setAttribute("style", "width: 100%; height: 90%");
+		img.setAttribute("style", "width: 100%; height: 80%");
 	});
 	const catNames = document.querySelectorAll('figcaption');
 	catNames.forEach(function(name) {
@@ -52,21 +57,29 @@ const generate = (() => {
 	});
 
 	// Logic for count clicks on each cat picture, upon click
-	const figures = document.querySelectorAll('figure');
-	let count1 = 0;
-	let count2 = 0;
-	catDivs[0].insertBefore(displayCount[0], figures[0]);
-	catDivs[1].insertBefore(displayCount[1], figures[1]);
-	figures[0].addEventListener("click", () => {
-		count1++;
-		displayCount[0].textContent = `${count1} clicks`;
-		displayCount[0].style.visibility = '';
-	});
-	figures[1].addEventListener("click", () => {
-		count2++;
-		displayCount[1].textContent = `${count2} clicks`;
-		displayCount[1].style.visibility = '';
-	});
+	const catDiv = document.querySelectorAll('.catDiv');
+	const displayCatFigure = document.createElement('figure');
+	const displayCatClicks = document.createElement('div');
+	let selectedCatNumber = 0;
+	/*
+	 * @func displays selected cat name, image and number of clicks, when called inside an event listener
+	 */
+	const catCaller = (i) => {
+		displayCatFigure.setAttribute("style", "max-width: 70%");
+		displayCatFigure.innerHTML = `<figcaption>Cat ${selectedCatNumber}</figcaption><img style="max-width: 100%" src="images/cat${selectedCatNumber}.jpg" alt="Cat ${selectedCatNumber}" />`;
+		displayCatClicks.textContent = `This cat was clicked ${clickCount[i]} times`;
+		displayCatBox.appendChild(displayCatFigure);
+		displayCatBox.appendChild(displayCatClicks);
+	};
 
+	let clickCount = [0,0,0,0,0];
+	catDiv.forEach(function(cat, index){
+		cat.addEventListener("click", () => {
+			clickCount[index]++;
+			selectedCatNumber = index + 1;
+			catCaller(index);
+			return index;
+		});
+	});
 })();
 /*});*/

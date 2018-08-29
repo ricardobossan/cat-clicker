@@ -5,11 +5,11 @@
 * Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
 -->
 
-# Project: Cat Clicker
+# Project: Cat Clicker Premium
 
 ## How to Run the App
 
-Click on a picture of a cat to make it's click counter increase.
+Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.
 
 ## Clone from `build-basic`?
 
