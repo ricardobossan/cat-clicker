@@ -157,16 +157,16 @@ setTimeout(function() {
 						expect(catImgSet.size).toBe(5);
 					});
 					it('name', () => {
-						expect(catNames[0]).not.toBe(null);
-						expect(catNames[0]).toBe(jasmine.any(String));
-						expect(catNames[1]).not.toBe(null);
-						expect(catNames[1]).toBe(jasmine.any(String));
-						expect(catNames[2]).not.toBe(null);
-						expect(catNames[2]).toBe(jasmine.any(String));
-						expect(catNames[3]).not.toBe(null);
-						expect(catNames[3]).toBe(jasmine.any(String));
-						expect(catNames[4]).not.toBe(null);
-						expect(catNames[4]).toBe(jasmine.any(String));
+						expect(catNames[0].textContent).not.toBe(null);
+						expect(typeof catNames[0].textContent).toBe("string");
+						expect(catNames[1].textContent).not.toBe(null);
+						expect(typeof catNames[1].textContent).toBe("string");
+						expect(catNames[2].textContent).not.toBe(null);
+						expect(typeof catNames[2].textContent).toBe("string");
+						expect(catNames[3].textContent).not.toBe(null);
+						expect(typeof catNames[3].textContent).toBe("string");
+						expect(catNames[4].textContent).not.toBe(null);
+						expect(typeof catNames[4].textContent).toBe("string");
 					});
 					it('image', () => {
 						expect(imgs[0]).not.toBe(null);
