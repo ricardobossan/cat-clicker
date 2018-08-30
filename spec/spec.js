@@ -79,12 +79,12 @@ setTimeout(function() {
 			};
 
 			let clickCount = [0,0,0,0,0];
+
 			catDiv.forEach(function(cat, index){
 				cat.addEventListener("click", () => {
 					clickCount[index]++;
 					selectedCatNumber = index + 1;
 					catCaller(index);
-					return index;
 				});
 			});
 			console.log(leftDiv.children[0].innerHTML);
@@ -190,31 +190,31 @@ setTimeout(function() {
 						expect(imgs[4].outerHTML).toContain('cat');
 					});
 					it('and respective number of clicks', () => {
-						expect(count1).toEqual(0);
-						count1.click();
-						expect(count1).toEqual(1);
-						count1.click();
-						expect(count1).toEqual(2);
-						expect(count2).toEqual(0);
-						count2.click();
-						expect(count2).toEqual(1);
-						count2.click();
-						expect(count2).toEqual(2);
-						expect(count3).toEqual(0);
-						count3.click();
-						expect(count3).toEqual(1);
-						count3.click();
-						expect(count3).toEqual(2);
-						expect(count4).toEqual(0);
-						count4.click();
-						expect(count4).toEqual(1);
-						count4.click();
-						expect(count4).toEqual(2);
-						expect(count5).toEqual(0);
-						count5.click();
-						expect(count5).toEqual(1);
-						count5.click();
-						expect(count5).toEqual(2);
+						expect(clickCount[0]).toEqual(0);
+						catDiv[0].click();
+						expect(clickCount[0]).toEqual(1);
+						catDiv[0].click();
+						expect(clickCount[0]).toEqual(2);
+						expect(clickCount[1]).toEqual(0);
+						catDiv[1].click();
+						expect(clickCount[1]).toEqual(1);
+						catDiv[1].click();
+						expect(clickCount[1]).toEqual(2);
+						expect(clickCount[2]).toEqual(0);
+						catDiv[2].click();
+						expect(clickCount[2]).toEqual(1);
+						catDiv[2].click();
+						expect(clickCount[2]).toEqual(2);
+						expect(clickCount[3]).toEqual(0);
+						catDiv[3].click();
+						expect(clickCount[3]).toEqual(1);
+						catDiv[3].click();
+						expect(clickCount[3]).toEqual(2);
+						expect(clickCount[4]).toEqual(0);
+						catDiv[4].click();
+						expect(clickCount[4]).toEqual(1);
+						catDiv[4].click();
+						expect(clickCount[4]).toEqual(2);
 
 						displayCatFigure.innerHTML = '';
 					});
