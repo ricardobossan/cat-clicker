@@ -175,31 +175,19 @@ setTimeout(function() {
 
 						expect(catNameArray[0,1,2,3,4]).not.toBe(null);
 						expect(typeof catNameArray[0,1,2,3,4]).toBe("string");
-						/*expect(catNames[1].textContent).not.toBe(null);
-						expect(typeof catNames[1].textContent).toBe("string");
-						expect(catNames[2].textContent).not.toBe(null);
-						expect(typeof catNames[2].textContent).toBe("string");
-						expect(catNames[3].textContent).not.toBe(null);
-						expect(typeof catNames[3].textContent).toBe("string");
-						expect(catNames[4].textContent).not.toBe(null);
-						expect(typeof catNames[4].textContent).toBe("string");
-*/					});
+					});
 					it('image', () => {
+						console.log(catFigures[0]);
 						expect(imgs[0]).not.toBe(null);
-						expect(imgs[0]).toBe(jasmine.any(String));
-						expect(imgs[0]).toContain('cat');
+						expect(imgs[0].outerHTML).toContain('cat');
 						expect(imgs[1]).not.toBe(null);
-						expect(imgs[1]).toBe(jasmine.any(String));
-						expect(imgs[1]).toContain('cat');
+						expect(imgs[1].outerHTML).toContain('cat');
 						expect(imgs[2]).not.toBe(null);
-						expect(imgs[2]).toBe(jasmine.any(String));
-						expect(imgs[2]).toContain('cat');
+						expect(imgs[2].outerHTML).toContain('cat');
 						expect(imgs[3]).not.toBe(null);
-						expect(imgs[3]).toBe(jasmine.any(String));
-						expect(imgs[3]).toContain('cat');
+						expect(imgs[3].outerHTML).toContain('cat');
 						expect(imgs[4]).not.toBe(null);
-						expect(imgs[4]).toBe(jasmine.any(String));
-						expect(imgs[4]).toContain('cat');
+						expect(imgs[4].outerHTML).toContain('cat');
 					});
 					it('and respective number of clicks', () => {
 						expect(count1).toEqual(0);
