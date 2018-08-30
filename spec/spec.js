@@ -30,8 +30,10 @@ setTimeout(function() {
 			const rightDiv = document.createElement('div');
 			mainTag.appendChild(leftDiv);
 			mainTag.appendChild(rightDiv);
-			leftDiv.setAttribute("style", "overflow: scroll; display: flex; flex-direction: column; width: 31.25%; height: 100vh; background-color: silver;");
-			rightDiv.setAttribute("style", "display: flex; justify-content: center; align-items: center; width: 68.75%; height: 100vh; background-color: silver;");
+			leftDiv.setAttribute("style", `overflow: scroll; display: flex; flex-direction: column; width: ${parseInt(mainTag.style.width)*0.32}%; height: 100vh; background-color: silver;`);
+			console.log(leftDiv.style.width);
+			rightDiv.setAttribute("style", `display: flex; justify-content: center; align-items: center; width: ${parseInt(mainTag.style.width)*0.68}%; height: 100vh; background-color: silver;`);
+			console.log(rightDiv.style.width);
 			let catDivs = [];
 			let catFigures = [];
 			for(let i = 0; i < 5; i++) {
@@ -85,47 +87,74 @@ setTimeout(function() {
 					return index;
 				});
 			});
+			console.log(leftDiv.children[0].innerHTML);
 			describe('generates cat pictures, by', () => {
 				it('creating a mainTag', () => {
 					expect(mainTag.outerHTML).toContain('main');
 				});
-				it('spliting the mainTag in two divs, by half it\'s width', () => {
-					expect(mainTag.children[0].style.width).toEqual(mainTag.style.width/3.2);
+				it('spliting the mainTag in two divs, by the right proportion (3.2) of it\'s width', () => {
+					expect(parseInt(mainTag.children[0].style.width)).toEqual(parseInt(mainTag.style.width)*0.32);
 				});
-				describe('mainTag.children[0] should be', () => {
+				describe('leftDiv should be', () => {
 					it('sliced in 5 divs', () => {
-						expect(mainTag.querySelectorAll('div').length).toEqual(5);
+						expect(leftDiv.children.length).toEqual(5);
 					});
 					it('on top of each other, using css grid or flexbox', () => {
 						expect(mainTag.children[0].style.display).toBe('flex');
-						expect(mainTag.children[0].style.flexWrap).toBe('wrap');
+						expect(mainTag.children[0].style.flexDirection).toBe('column');
 						expect(document.querySelectorAll('img')[0,1,2,3,4].style.height).toBe('80%');
 					});
 				});
 				it('each cat should have the correct <figure> element', () => {
-					expect(mainTag.children[0].children[0].outerHTML).toContain(catDiv[0]);
-					expect(mainTag.children[0].children[1].outerHTML).toContain(catDiv[1]);
-					expect(mainTag.children[0].children[2].outerHTML).toContain(catDiv[2]);
-					expect(mainTag.children[0].children[3].outerHTML).toContain(catDiv[3]);
-					expect(mainTag.children[0].children[4].outerHTML).toContain(catDiv[4]);
+					expect(leftDiv.children[0]).toBe(catDiv[0]);
+					expect(leftDiv.children[1]).toBe(catDiv[1]);
+					expect(leftDiv.children[2]).toBe(catDiv[2]);
+					expect(leftDiv.children[3]).toBe(catDiv[3]);
+					expect(leftDiv.children[4]).toBe(catDiv[4]);
 				});
-				it('each <figure> should have inside, in this order, a <figcaption>, displaying the that cat\'s name, and an <img src="" alt="">', () => {
-					expect(mainTag.children[0].children[0].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[0].children[1].lastChild.outerHTML).toContain('<img');
-					expect(mainTag.children[0].children[1].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[1].children[1].lastChild.outerHTML).toContain('<img');
-					expect(mainTag.children[0].children[2].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[2].children[1].lastChild.outerHTML).toContain('<img');
-					expect(mainTag.children[0].children[3].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[3].children[1].lastChild.outerHTML).toContain('<img');
-					expect(mainTag.children[0].children[4].children[1].firstChild.outerHTML).toContain('<figcaption');
-					expect(mainTag.children[0].children[4].children[1].lastChild.outerHTML).toContain('<img');
+				it('each <figure> should have inside, in this order, a <figcaption>, displaying that cat\'s name, and an <img src="" alt="">', () => {
+					expect(leftDiv.children[0].innerHTML).toContain('<figcaption');
+					expect(leftDiv.children[0].innerHTML).toContain('<img');
+					expect(leftDiv.children[1].innerHTML).toContain('<figcaption');
+					expect(leftDiv.children[1].innerHTML).toContain('<img');
+					expect(leftDiv.children[2].innerHTML).toContain('<figcaption');
+					expect(leftDiv.children[2].innerHTML).toContain('<img');
+					expect(leftDiv.children[3].innerHTML).toContain('<figcaption');
+					expect(leftDiv.children[3].innerHTML).toContain('<img');
+					expect(leftDiv.children[4].innerHTML).toContain('<figcaption');
+					expect(leftDiv.children[4].innerHTML).toContain('<img');
 					expect(catNames[0,1,2,3,4].style.textAlign).toBe('center');
 				});
-				describe('create the area to display the selected cat image on the second div of the mainTag, displaying the cat\'s', () => {
+				describe('create the area to display the selected cat image on the second div of the mainTag, displaying that cat\'s', () => {
+					console.log(catFigures);
 					it('unique', () => {
-						expect(catNames).toBe(jasmine.any(Set));
-						expect(imgs).toBe(jasmine.any(Set));
+
+						let catNameSet = new Set();
+						catNames.forEach(function(name){
+							catNameSet.add(parseInt(name.textContent[name.textContent.length -1]));
+						});
+						// extra layer of security for ensuring the catNameSet is a Set type
+						catNameSet.add(1);
+						catNameSet.add(1);
+						console.log(Array.isArray(catNameSet)); // should output `false`
+						console.log(catNameSet); // should output a Set, with a size of 5
+
+						let catImgSet = new Set();
+						let catImgs = leftDiv.querySelectorAll('img');
+						catImgs.forEach(function(image){
+							catImgSet.add(parseInt(image.alt[image.alt.length -1]));
+							//console.log(image.alt[image.alt.length -1]); /*= parseInt(catImgSet[ind].textContent);*/
+						});
+						// extra layer of security for ensuring the catImgSet is a Set type
+						catImgSet.add(1);
+						catImgSet.add(1);
+						console.log(Array.isArray(catImgSet)); // should output `false`
+						console.log(catImgSet); // should output a Set, with a size of 5
+
+						expect(catNameSet.toString()).toEqual("[object Set]");
+						expect(catNameSet.size).toBe(5);
+						expect(catImgSet.toString()).toEqual("[object Set]");
+						expect(catImgSet.size).toBe(5);
 					});
 					it('name', () => {
 						expect(catNames[0]).not.toBe(null);
@@ -156,7 +185,7 @@ setTimeout(function() {
 						expect(imgs[4]).toBe(jasmine.any(String));
 						expect(imgs[4]).toContain('cat');
 					});
-					it('and number of clicks', () => {
+					it('and respective number of clicks', () => {
 						expect(count1).toEqual(0);
 						count1.click();
 						expect(count1).toEqual(1);
