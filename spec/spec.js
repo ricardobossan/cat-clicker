@@ -157,9 +157,25 @@ setTimeout(function() {
 						expect(catImgSet.size).toBe(5);
 					});
 					it('name', () => {
-						expect(catNames[0].textContent).not.toBe(null);
-						expect(typeof catNames[0].textContent).toBe("string");
-						expect(catNames[1].textContent).not.toBe(null);
+
+
+						let catNameSet = new Set();
+						catNames.forEach(function(name){
+							catNameSet.add(parseInt(name.textContent[name.textContent.length -1]));
+						});
+						console.log(catNameSet);
+
+						let catNameArray = [];
+						console.log(Array.isArray(catNameArray));
+						catNameSet.forEach(function(nome) {
+							let newName = nome;
+							catNameArray.push(newName.toString());
+						});
+						console.log(catNameArray);
+
+						expect(catNameArray[0,1,2,3,4]).not.toBe(null);
+						expect(typeof catNameArray[0,1,2,3,4]).toBe("string");
+						/*expect(catNames[1].textContent).not.toBe(null);
 						expect(typeof catNames[1].textContent).toBe("string");
 						expect(catNames[2].textContent).not.toBe(null);
 						expect(typeof catNames[2].textContent).toBe("string");
@@ -167,7 +183,7 @@ setTimeout(function() {
 						expect(typeof catNames[3].textContent).toBe("string");
 						expect(catNames[4].textContent).not.toBe(null);
 						expect(typeof catNames[4].textContent).toBe("string");
-					});
+*/					});
 					it('image', () => {
 						expect(imgs[0]).not.toBe(null);
 						expect(imgs[0]).toBe(jasmine.any(String));
