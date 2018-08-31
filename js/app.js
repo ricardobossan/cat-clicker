@@ -26,8 +26,10 @@ const generate = (() => {
 	const rightDiv = document.createElement('div');
 	mainTag.appendChild(leftDiv);
 	mainTag.appendChild(rightDiv);
-	leftDiv.setAttribute("style", "overflow: scroll; display: flex; flex-direction: column; width: 31.25%; height: 100vh; background-color: silver;");
-	rightDiv.setAttribute("style", "display: flex; justify-content: center; align-items: center; width: 68.75%; height: 100vh; background-color: silver;");
+	leftDiv.setAttribute("style", `overflow: scroll; display: flex; flex-direction: column; width: ${parseInt(mainTag.style.width)*0.32}%; height: 100vh; background-color: silver;`);
+	console.log(leftDiv.style.width);
+	rightDiv.setAttribute("style", `display: flex; justify-content: center; align-items: center; width: ${parseInt(mainTag.style.width)*0.68}%; height: 100vh; background-color: silver;`);
+	console.log(rightDiv.style.width);
 	let catDivs = [];
 	let catFigures = [];
 	for(let i = 0; i < 5; i++) {
@@ -73,12 +75,12 @@ const generate = (() => {
 	};
 
 	let clickCount = [0,0,0,0,0];
+
 	catDiv.forEach(function(cat, index){
 		cat.addEventListener("click", () => {
 			clickCount[index]++;
 			selectedCatNumber = index + 1;
 			catCaller(index);
-			return index;
 		});
 	});
 })();
