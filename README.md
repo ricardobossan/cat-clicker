@@ -7,6 +7,8 @@
 
 # Project: Cat Clicker Premium
 
+The functional programming paradigm was used to create this app.
+
 ## How to Run the App
 
 Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.
