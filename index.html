@@ -1,11 +1,53 @@
+<!--
+ * @file: Markup for Cat Click Premium Pro
+ * @TODO:
+
+	 * This view will have 3 main sections:
+
+	 	* list of cats names;
+	 	* Display for selected cat, containing it's respective:
+	 		- Name
+	 		- Image
+	 		- Number of clicks
+	 	* Button named "Admin", that, once clicked, will show the initially hidden form for inputtin a new cat's name, image url and number of clicks
+ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Cat Clicker Premium</title>
+	<title>Cat Clicker Premium Pro</title>
 	<link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+	<main>
+		<section>
+			<ul>
+				<li class="cat-list">
+					<button>Cat1 Name</button>
+					<button>Cat2 Name</button>
+					<button>Cat3 Name</button>
+					<button>Cat4 Name</button>
+					<button>Cat5 Name</button>
+					<section>
+						<figure>
+							<figcaption>Current Cat</figcaption>
+							<img src="./images/currentCatImg" alt="currentCatName">
+						</figure>
+						<p>clickCountCurrent</p>
+						<section>
+							<button>Admin</button>
+							<form action="" autocomplete="on">
+								<label for="POST-name">New cat name: </label>
+								<input type="text" id="POST-name" name>
+								<label for="">New Cat's image URl: </label>
+								<input type="url" name>
+							</form>
+						</section>
+					</section>
+				</li>
+			</ul>
+		</section>
+	</main>
 	<script src="js/app.js"></script>
 </body>
 </html>
