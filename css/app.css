@@ -1,0 +1,7 @@
+.hidden-form {
+	visibility: hidden;
+}
+
+.shown-form {
+	visibility: visible;
+}

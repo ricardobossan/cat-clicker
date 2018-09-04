@@ -28,24 +28,27 @@
 					<button>Cat3 Name</button>
 					<button>Cat4 Name</button>
 					<button>Cat5 Name</button>
-					<section>
-						<figure>
-							<figcaption>Current Cat</figcaption>
-							<img src="./images/currentCatImg" alt="currentCatName">
-						</figure>
-						<p>clickCountCurrent</p>
-						<section>
-							<button>Admin</button>
-							<form action="" autocomplete="on">
-								<label for="POST-name">New cat name: </label>
-								<input type="text" id="POST-name" name>
-								<label for="">New Cat's image URl: </label>
-								<input type="url" name>
-							</form>
-						</section>
-					</section>
 				</li>
 			</ul>
+		</section>
+		<section>
+			<figure>
+				<figcaption>Current Cat</figcaption>
+				<img src="./images/currentCatImg" alt="currentCatName">
+			</figure>
+			<p>clickCountCurrent</p>
+		</section>
+		<section>
+			<button id="admin">Admin</button>
+			<form id="new-cat-form" class="hidden-form" action="" autocomplete="on"> <!-- class="hidden-form". Upon click(), change to class="show-form"-->
+				<label for="POST-name">New cat name: </label>
+				<input id="POST-name" type="text">
+				<label for="POST-name">New Cat image URL: </label>
+				<input id="POST-name" type="url" name>
+				<br>
+				<input type="submit" value="save">
+				<button>Cancel</button> <!-- click() it makes the form hidden again. classList.toggle('shown-form hidden-form') -->
+			</form>
 		</section>
 	</main>
 	<script src="js/app.js"></script>

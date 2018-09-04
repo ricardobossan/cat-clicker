@@ -1,24 +1,23 @@
 /**
- * @file THolds the logic for implementing a cat clicker page, where, once you click in a catr picture, a counter above it increments the number of clicks on that picture by 1.
+ * @file This file has tests for the app.js file.
+ *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @see [lesson: FEND Nanodegree / Chapter 4: Front-End Applications / Lesson 1: Changing Expectations](https://classroom.udacity.com/nanodegrees/nd001/parts/e4e4c31c-2348-4382-826f-caac197d6f5f/modules/4db0b091-fc81-40c2-b7f0-a4ded06480e1/lessons/3417188540/concepts/34408790480923)
+ * @todo fix tests for this version of the app
+ *
  */
 
 /**
  * @desc Encapsulated the whole code for the tests inside a `setTimeout()` method, with an empty delay, so that the DOM would already have loaded when
  */
-
 /*setTimeout(function() {
-*/	/**
-	 * Generates the DOM
-	 *  @function
-	 */
+*/
+/*	(function() {
+*/
 /**
  * @name MODEL
  * @desc Holds the project's data
  */
-console.log(document.querySelector('p'));
 let model = {
 	cats: [
 		ifrit = {
@@ -55,12 +54,12 @@ let model = {
  */
 const octopus = {
 
-	init: function() {
+	init: () => {
 
 		view.init();
 	},
 
-	hideOrRevealForm: function() {
+	hideOrRevealForm: () => {
 
 		view.newCatForm.classList.toggle('hidden-form');
 		view.newCatForm.classList.toggle('shown-form');
@@ -75,14 +74,54 @@ const octopus = {
  */
 const view = {
 
-	init: function() {
-		this.adminButton = document.querySelector('#admin');
+	init: () => {
+		const adminButton = document.getElementById('admin');
 		this.newCatForm = document.querySelector('#new-cat-form');
 
-		this.adminButton.addEventListener("click", function() {
+		adminButton.addEventListener("click", () => {
 			octopus.hideOrRevealForm();
 		});
 	}
 };
 
 octopus.init();
+
+describe('creates MOV paradigm:', () => {
+	describe('model', () => {
+		it('is a defined object', () => {
+			expect(model).not.toBe(undefined);
+			expect(typeof model).toBe("object");
+		});
+	});
+	describe('octopus', () => {
+		it('is a defined object', () => {
+			expect(octopus).not.toBe(undefined);
+			expect(typeof octopus).toBe("object");
+		});
+		it('provides a cat name to the view', () => {
+
+		});
+	});
+	describe('view', () => {
+		it('is a defined object', () => {
+			expect(view).not.toBe(undefined);
+			expect(typeof view).toBe("object");
+		});
+		describe('displays the cat data into the apropriate markup fields:', () => {
+			it('List of cats');
+
+		});
+		describe('And also displays the Admin button', () => {
+			it('which is, at first, hidden', () => {
+				expect(view.newCatForm.classList).toBe('hidden-form');
+			});
+			it('and shown, once clicked', () => {
+				view.newCatForm.click();
+				expect(view.newCatForm.classList).toBe('shown-form');
+
+			});
+		});
+	});
+});
+/*})();
+*//*});*/
