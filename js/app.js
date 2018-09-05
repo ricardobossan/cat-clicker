@@ -58,7 +58,8 @@ const octopus = {
 	init: function() {
 
 		view.init();
-	},
+/*		view.event();
+*/	},
 
 	hideOrRevealForm: function() {
 
@@ -76,13 +77,15 @@ const octopus = {
 const view = {
 
 	init: function() {
-		this.adminButton = document.querySelector('#admin');
-		this.newCatForm = document.querySelector('#new-cat-form');
-
+		this.adminButton = document.querySelector('.admin');
+		this.newCatForm = document.querySelector('.new-cat-form');
+	},
+/*	event: function() {
 		this.adminButton.addEventListener("click", function() {
 			octopus.hideOrRevealForm();
 		});
 	}
-};
+*/};
 
 octopus.init();
+console.log(view.newCatForm);
