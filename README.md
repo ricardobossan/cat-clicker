@@ -1,15 +1,81 @@
-<!--
-@todo:
-* document build for this project, thinking about using it as a model later
-	* Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and the README.md file, modifying it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project, and for running the `dist` task, and also modify the gulpfile.js, with the `dist` task.
-* Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
--->
-
 # Project: Cat Clicker Premium
+
 
 ## How to Run the App
 
 Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.
+
+## Important notes on buidling this app.
+
+#### Unit Tests
+
+The testing framework used for building this project was _Jasmine_.
+
+In order for this framework to read the html DOM, the contents of the `index.html` file's `<body>` tag had to be added into the `SpecRunner.html` file's body, with the `<script>` tag for running the `spec.spec.js` file in the end. Also, The `<head>` tag will contain the `<link>` tag for the `css/app.css` file.
+
+The content of the SpecRunner file should be something like this:
+
+	```
+	<!DOCTYPE html>
+	<html>
+	<head>
+	  <meta charset="utf-8">
+	  <title>Jasmine Spec Runner v3.1.0</title>
+	  <link rel="stylesheet" href="css/app.css">
+
+	  <link rel="shortcut icon" type="image/png" href="node_modules/jasmine-core/images/jasmine_favicon.png">
+	  <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+
+	  <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+	  <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+	  <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+
+
+	</head>
+
+	<body>
+	    <main>
+	    <section>
+	      <ul>
+	        <li class="cat-list">
+	          <button>Cat1 Name</button>
+	          <button>Cat2 Name</button>
+	          <button>Cat3 Name</button>
+	          <button>Cat4 Name</button>
+	          <button>Cat5 Name</button>
+	        </li>
+	      </ul>
+	    </section>
+	    <section>
+	      <figure>
+	        <figcaption>Current Cat</figcaption>
+	        <img src="./images/currentCatImg" alt="currentCatName">
+	      </figure>
+	      <p>clickCountCurrent</p>
+	    </section>
+	    <section>
+	      <button id="admin">Admin</button>
+	      <form id="new-cat-form" class="hidden-form" action="" autocomplete="on"> <!-- class="hidden-form". Upon click(), change to class="show-form"-->
+	        <label for="POST-name">New cat name: </label>
+	        <input id="POST-name" type="text">
+	        <label for="POST-name">New Cat image URL: </label>
+	        <input id="POST-name" type="url" name>
+	        <br>
+	        <input type="submit" value="save">
+	        <button>Cancel</button> <!-- click() it makes the form hidden again. classList.toggle('shown-form hidden-form') -->
+	      </form>
+	    </section>
+	  </main>
+
+	  <!-- include source files here... -->
+	  <script src="js/app.js"></script>
+
+	  <!-- include spec files here... -->
+	  <script src="spec/spec.js"></script>
+	</body>
+	</html>
+	```
+
 
 ## Clone from `build-basic`?
 

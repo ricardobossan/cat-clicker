@@ -86,14 +86,70 @@
 
 
     <section class="readme-section">
-        <article><!--
-@todo:
-* document build for this project, thinking about using it as a model later
-    * Create a new `build basic" project, with build for src directory, gulp, browsersync, jasmine and the README.md file, modifying it with [instructions](https://docs.npmjs.com/getting-started/updating-local-packages) for updating your npm packages everytime the `build basic` project is cloned, for a new basic project, and for running the `dist` task, and also modify the gulpfile.js, with the `dist` task.
-* Implement the `./spec/spec.js` file, the TDD way, for the `app.js` functionality running
--->
-<h1>Project: Cat Clicker Premium</h1><h2>How to Run the App</h2><p>Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.</p>
-<h2>Clone from <code>build-basic</code>?</h2><p>This Section is written with the expectation that you already have installed globally node.js, gulp, browsersync and eslint</p>
+        <article><h1>Project: Cat Clicker Premium</h1><h2>How to Run the App</h2><p>Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.</p>
+<h2>Important notes on buidling this app.</h2><h4>Unit Tests</h4><p>The testing framework used for building this project was <em>Jasmine</em>.</p>
+<p>In order for this framework to read the html DOM, the contents of the <code>index.html</code> file's <code>&lt;body&gt;</code> tag had to be added into the <code>SpecRunner.html</code> file's body, with the <code>&lt;script&gt;</code> tag for running the <code>spec.spec.js</code> file in the end. Also, The <code>&lt;head&gt;</code> tag will contain the <code>&lt;link&gt;</code> tag for the <code>css/app.css</code> file.</p>
+<p>The content of the SpecRunner file should be something like this:</p>
+<pre class="prettyprint source"><code>```
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+  &lt;meta charset=&quot;utf-8&quot;>
+  &lt;title>Jasmine Spec Runner v3.1.0&lt;/title>
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot;>
+
+  &lt;link rel=&quot;shortcut icon&quot; type=&quot;image/png&quot; href=&quot;node_modules/jasmine-core/images/jasmine_favicon.png&quot;>
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;node_modules/jasmine-core/lib/jasmine-core/jasmine.css&quot;>
+
+  &lt;script src=&quot;node_modules/jasmine-core/lib/jasmine-core/jasmine.js&quot;>&lt;/script>
+  &lt;script src=&quot;node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js&quot;>&lt;/script>
+  &lt;script src=&quot;node_modules/jasmine-core/lib/jasmine-core/boot.js&quot;>&lt;/script>
+
+
+&lt;/head>
+
+&lt;body>
+    &lt;main>
+    &lt;section>
+      &lt;ul>
+        &lt;li class=&quot;cat-list&quot;>
+          &lt;button>Cat1 Name&lt;/button>
+          &lt;button>Cat2 Name&lt;/button>
+          &lt;button>Cat3 Name&lt;/button>
+          &lt;button>Cat4 Name&lt;/button>
+          &lt;button>Cat5 Name&lt;/button>
+        &lt;/li>
+      &lt;/ul>
+    &lt;/section>
+    &lt;section>
+      &lt;figure>
+        &lt;figcaption>Current Cat&lt;/figcaption>
+        &lt;img src=&quot;./images/currentCatImg&quot; alt=&quot;currentCatName&quot;>
+      &lt;/figure>
+      &lt;p>clickCountCurrent&lt;/p>
+    &lt;/section>
+    &lt;section>
+      &lt;button id=&quot;admin&quot;>Admin&lt;/button>
+      &lt;form id=&quot;new-cat-form&quot; class=&quot;hidden-form&quot; action=&quot;&quot; autocomplete=&quot;on&quot;> &lt;!-- class=&quot;hidden-form&quot;. Upon click(), change to class=&quot;show-form&quot;-->
+        &lt;label for=&quot;POST-name&quot;>New cat name: &lt;/label>
+        &lt;input id=&quot;POST-name&quot; type=&quot;text&quot;>
+        &lt;label for=&quot;POST-name&quot;>New Cat image URL: &lt;/label>
+        &lt;input id=&quot;POST-name&quot; type=&quot;url&quot; name>
+        &lt;br>
+        &lt;input type=&quot;submit&quot; value=&quot;save&quot;>
+        &lt;button>Cancel&lt;/button> &lt;!-- click() it makes the form hidden again. classList.toggle('shown-form hidden-form') -->
+      &lt;/form>
+    &lt;/section>
+  &lt;/main>
+
+  &lt;!-- include source files here... -->
+  &lt;script src=&quot;js/app.js&quot;>&lt;/script>
+
+  &lt;!-- include spec files here... -->
+  &lt;script src=&quot;spec/spec.js&quot;>&lt;/script>
+&lt;/body>
+&lt;/html>
+```</code></pre><h2>Clone from <code>build-basic</code>?</h2><p>This Section is written with the expectation that you already have installed globally node.js, gulp, browsersync and eslint</p>
 <p>Create a new directory to be your project's repo, at your <code>home directory</code> and clone <code>build-basic</code> into it:</p>
 <pre class="prettyprint source"><code>$ mkdir &lt;new-project>
 $ git clone build-basic &lt;new-project></code></pre><p>Update and Check Outdated npm packages, by running <a href="https://docs.npmjs.com/getting-started/updating-local-packages" title="Update Npm Packages">these commands</a> on the directory where the <code>package.json</code> file is located:</p>
@@ -466,7 +522,7 @@ jsdoc &lt;./file-path/file-name></code></pre><h4>Running The Build Tool</h4><ul>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on September 7th 2018, 3:54:54 pm
+		on September 7th 2018, 6:36:00 pm
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
