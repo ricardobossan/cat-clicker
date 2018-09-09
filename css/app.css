@@ -5,3 +5,9 @@
 .shown-form {
 	visibility: visible;
 }
+
+.cat-list {
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+}

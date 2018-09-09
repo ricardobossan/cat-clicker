@@ -9,27 +9,27 @@
  */
 let model = {
 	cats: [
-		ifrit = {
+		{
 			name: "Ifrit",
 			image: "https://morawscy-vet.pl/wp-content/uploads/2018/07/yellow_tiger_cat.jpg",
 			clickCount: 0
 		},
-		shiva = {
+		{
 			name: "Shiva",
 			image: "https://vignette.wikia.nocookie.net/animal-jam-clans-stories/images/b/b8/Ice-cat-cats-31471539-1600-1200.jpg/revision/latest?cb=20160614065319",
 			clickCount: 0
 		},
-		carbuncle = {
-			name: "Carbuncle",
+		{
+			name: "Siren",
 			image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/42541306/1/?bust=1534964951&width=1439",
 			clickCount: 0
 		},
-		siren = {
-			name: "Siren",
+		{
+			name: "Carbuncle",
 			image: "https://i.ytimg.com/vi/SP5RYYK3LaY/hqdefault.jpg",
 			clickCount: 0
 		},
-		bahamut = {
+		{
 			name: "Bahamut",
 			image: "http://catobsessed.com/wp-content/uploads/2017/07/my-cat-in-dragon-costume.jpg",
 			clickCount: 0
@@ -47,6 +47,7 @@ const octopus = {
 
 		view.init();
 		view.event();
+		view.catListNames();
 	},
 
 	hideOrRevealForm: function() {
@@ -55,8 +56,13 @@ const octopus = {
 		view.newCatForm.classList.toggle('shown-form');
 	},
 
-};
+	sendCats: () => {
+		let sentCats = model;
+		return sentCats;
+	}
 
+
+};
 
 /**
  * @name VIEW
@@ -65,6 +71,7 @@ const octopus = {
 const view = {
 
 	init: function() {
+		this.catList = document.querySelector('.cat-list');
 		this.adminButton = document.querySelector('#admin');
 		this.newCatForm = document.querySelector('#new-cat-form');
 	},
@@ -72,7 +79,14 @@ const view = {
 		this.adminButton.addEventListener("click", function() {
 			octopus.hideOrRevealForm();
 		});
+	},
+
+	catListNames: () => {
+		for(let i = 0; i < view.catList.children.length; i++){
+			view.catList.children[i].textContent = octopus.sendCats().cats[i].name;
+		}
 	}
+
 };
 
 octopus.init();
