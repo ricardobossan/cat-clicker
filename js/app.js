@@ -90,4 +90,4 @@ const view = {
 };
 
 octopus.init();
-console.log(view.newCatForm);
+console.log("in app.js, all is working properly, if you see this.");

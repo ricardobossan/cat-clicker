@@ -4,7 +4,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo find out why Error during loading: Uncaught TypeError: Cannot read property 'addEventListener' of null in http://localhost:8000/js/app.js line 81
+ * @todo refactore the event listener's content. Try to encapsulate it in functions, and even callbacks, if possible.
  */
 describe('creates MOV paradigm:', () => {
 	describe('Model', () => {
@@ -19,27 +19,9 @@ describe('creates MOV paradigm:', () => {
 			expect(octopus).not.toBe(undefined);
 			expect(typeof octopus).toBe("object");
 		});
-		xdescribe('Provides each cat name to the view/cat list area. Each cat name:', () => {
-			it('is a button', () => {
-				expect().toBe();
-			});
-			xdescribe('if clicked', () => {
-				xdescribe('provides the selected cat object data', () => {
-					it('to the view/selected cat area.', () => {
-						expect().toBe();
-					});
-					xdescribe('This data is the respective cat\	s', () => {
-						xit('name;', () => {
-							expect().to();
-						});
-						xit('image;', () => {
-							expect().to();
-						});
-						xit('amount of clicks.', () => {
-							expect().to();
-						});
-					});
-				});
+		describe('Provides the model data ', () => {
+			it('to the view object:', () => {
+				expect(octopus.sendCats()).toEqual(model);
 			});
 		});
 	});
@@ -50,7 +32,9 @@ describe('creates MOV paradigm:', () => {
 		});
 		describe('displays the cat data into the apropriate markup fields:', () => {
 			describe('List of cats names', () => {
-				it('name', () => {
+				// Waits for DOM to load
+/*				setTimeout(() => {
+*/					it('name', () => {
 					expect(octopus.sendCats().cats[0].name).toBe("Ifrit");
 					expect(view.catList.children[0].textContent).toEqual(octopus.sendCats().cats[0].name);
 				});
@@ -70,15 +54,35 @@ describe('creates MOV paradigm:', () => {
 					expect(octopus.sendCats().cats[4].name).toBe("Bahamut");
 					expect(view.catList.children[4].textContent).toEqual(octopus.sendCats().cats[4].name);
 				});
-			});
-			xdescribe('Selected cat data:', () => {
+/*				}, 500);
+*/			});
+			describe('if a cat name is clicked, the view displays it\'s', () => {
 				it('name;', () => {
+
+					// inside object.octopus encapsulate inside a function to be autoexecuted from the global object, after where the octopus object is defined in the code
+					let selectedCat = "";
+					for(let i = 0; i<view.catList.children.length; i++){
+						view.catList.children[i].addEventListener("click",
+							() => {
+								selectedCat = model.cats[i];
+								document.querySelector('#display-selected').children[0].outerHTML = `<figcaption>${selectedCat.name}</figcaption>`;
+								document.querySelector('#display-selected').children[1].outerHTML = `<img src="${selectedCat.image}" alt="${selectedCat.name}">`
+							});
+					};
+					// inside object.view
+/*							view.displaySelected = () => {
+								document.querySelector('#display-selected').children[1].outerHTML = `<img src="${selectedCat.image}"`
+							};
+*/
+/*						view.displaySelected();
+*/
+						view.catList.children[0].click();
+						expect(document.querySelector('#display-selected').children[0].textContent).toBe(selectedCat.name);
+				});
+				xit('image;', () => {
 					expect().to();
 				});
-				it('image;', () => {
-					expect().to();
-				});
-				it('amount of clicks.', () => {
+				xit('amount of clicks.', () => {
 					expect().to();
 				});
 			});
@@ -113,4 +117,4 @@ describe('creates MOV paradigm:', () => {
 			});
 		});
 	});
-})
+});
