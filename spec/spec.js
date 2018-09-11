@@ -4,7 +4,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo refactore the event listener's content. Try to encapsulate it in functions, and even callbacks, if possible.
+ * @todo refactor the event listener's content. Try to encapsulate it in functions, and even callbacks, if possible.
  */
 describe('creates MOV paradigm:', () => {
 	describe('Model', () => {
@@ -57,30 +57,36 @@ describe('creates MOV paradigm:', () => {
 /*				}, 500);
 */			});
 			describe('if a cat name is clicked, the view displays it\'s', () => {
-				it('name;', () => {
+				// inside object.octopus encapsulate inside a function to be autoexecuted from the global object, after where the octopus object is defined in the code
+				let selectedCat = "";
+				const displayCat = document.querySelector('#display-selected');
+				let clickCounter = document.querySelector('#click-count');
+				for(let i = 0; i<view.catList.children.length; i++){
+					view.catList.children[i].addEventListener("click",
+						() => {
+							// updates the cat name
+							selectedCat = model.cats[i];
+							displayCat.children[0].textContent = selectedCat.name;
+							// updates the cat image
+							displayCat.children[1].outerHTML = `<img src="${selectedCat.image}" alt="${selectedCat.name}">`
+							// updates the clickCount for the model, so it iterates at each click on the same cat, and is properly shown on the respective selectedCat object
+							model.cats[i].clickCount++;
+							if (selectedCat.clickCount > 0) {
+								clickCounter.classList.remove('click-count-hidden');
+								clickCounter.classList.add('click-count-shown');
+							} else {
+								clickCounter.classList.remove('click-count-shown');
+								clickCounter.classList.add('click-count-hidden');
 
-					// inside object.octopus encapsulate inside a function to be autoexecuted from the global object, after where the octopus object is defined in the code
-					let selectedCat = "";
-					for(let i = 0; i<view.catList.children.length; i++){
-						view.catList.children[i].addEventListener("click",
-							() => {
-								selectedCat = model.cats[i];
-								document.querySelector('#display-selected').children[0].outerHTML = `<figcaption>${selectedCat.name}</figcaption>`;
-								document.querySelector('#display-selected').children[1].outerHTML = `<img src="${selectedCat.image}" alt="${selectedCat.name}">`
-							});
-					};
-					// inside object.view
-/*							view.displaySelected = () => {
-								document.querySelector('#display-selected').children[1].outerHTML = `<img src="${selectedCat.image}"`
-							};
-*/
-/*						view.displaySelected();
-*/
-						view.catList.children[0].click();
-						expect(document.querySelector('#display-selected').children[0].textContent).toBe(selectedCat.name);
+							}
+						});
+					view.catList.children[0].click();
+				};
+				it('name;', () => {
+					expect(displayCat.children[0].textContent).toBe(selectedCat.name);
 				});
-				xit('image;', () => {
-					expect().to();
+				it('image;', () => {
+					expect(displayCat.children[1].outerHTML).toBe(`<img src="${selectedCat.image}" alt="${selectedCat.name}">`);
 				});
 				xit('amount of clicks.', () => {
 					expect().to();
