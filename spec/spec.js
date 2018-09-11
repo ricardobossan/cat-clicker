@@ -4,7 +4,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo refactor the event listener's content. Try to encapsulate it in functions, and even callbacks, if possible.
+ * @todo test for selected cat clickCounter.
  */
 describe('creates MOV paradigm:', () => {
 	describe('Model', () => {
@@ -61,6 +61,8 @@ describe('creates MOV paradigm:', () => {
 				let selectedCat = "";
 				const displayCat = document.querySelector('#display-selected');
 				let clickCounter = document.querySelector('#click-count');
+				displayCat.children[0].textContent = model.noCat.name;
+				displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
 				for(let i = 0; i<view.catList.children.length; i++){
 					view.catList.children[i].addEventListener("click",
 						() => {
@@ -72,24 +74,24 @@ describe('creates MOV paradigm:', () => {
 							// updates the clickCount for the model, so it iterates at each click on the same cat, and is properly shown on the respective selectedCat object
 							model.cats[i].clickCount++;
 							if (selectedCat.clickCount > 0) {
+								clickCounter.textContent = selectedCat.clickCount;
 								clickCounter.classList.remove('click-count-hidden');
 								clickCounter.classList.add('click-count-shown');
 							} else {
 								clickCounter.classList.remove('click-count-shown');
 								clickCounter.classList.add('click-count-hidden');
-
 							}
 						});
-					view.catList.children[0].click();
 				};
-				it('name;', () => {
+/*					view.catList.children[0].click();
+*/				it('name;', () => {
 					expect(displayCat.children[0].textContent).toBe(selectedCat.name);
 				});
 				it('image;', () => {
 					expect(displayCat.children[1].outerHTML).toBe(`<img src="${selectedCat.image}" alt="${selectedCat.name}">`);
 				});
-				xit('amount of clicks.', () => {
-					expect().to();
+				it('amount of clicks.', () => {
+					expect(document.querySelector('#display-selected-section').children[1].textContent).toEqual(selectedCat.clickCount);
 				});
 			});
 			describe('Admin button, which', () => {

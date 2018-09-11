@@ -34,7 +34,13 @@ let model = {
 			image: "http://catobsessed.com/wp-content/uploads/2017/07/my-cat-in-dragon-costume.jpg",
 			clickCount: 0
 		}
-	]
+	],
+
+	noCat: {
+		name: "Click a cat name to display it\'s data",
+		image: "https://mikecavaliere.com/wp-content/uploads/2015/05/Question-400x400.png",
+		clickCount: "no clicks"
+	}
 };
 
 /**
