@@ -57,33 +57,6 @@ describe('creates MOV paradigm:', () => {
 /*				}, 500);
 */			});
 			describe('if a cat name is clicked, the view displays it\'s', () => {
-				// inside object.octopus encapsulate inside a function to be autoexecuted from the global object, after where the octopus object is defined in the code
-				let selectedCat = "";
-				const displayCat = document.querySelector('#display-selected');
-				let clickCounter = document.querySelector('#click-count');
-				displayCat.children[0].textContent = model.noCat.name;
-				displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
-				for(let i = 0; i<view.catList.children.length; i++){
-					view.catList.children[i].addEventListener("click",
-						// Function to be executed once a cat name is clicked in the cat list.
-						() => {
-							// updates the cat name
-							selectedCat = model.cats[i];
-							displayCat.children[0].textContent = selectedCat.name;
-							// updates the cat image
-							displayCat.children[1].outerHTML = `<img src="${selectedCat.image}" alt="${selectedCat.name}">`
-							// updates the clickCount for the model, so it iterates at each click on the same cat, and is properly shown on the respective selectedCat object
-							model.cats[i].clickCount++;
-							if (selectedCat.clickCount > 0) {
-								clickCounter.textContent = selectedCat.clickCount;
-								clickCounter.classList.remove('click-count-hidden');
-								clickCounter.classList.add('click-count-shown');
-							} else {
-								clickCounter.classList.remove('click-count-shown');
-								clickCounter.classList.add('click-count-hidden');
-							}
-						});
-				};
 /*					view.catList.children[0].click();
 */
 				beforeEach((done) => {
@@ -91,13 +64,13 @@ describe('creates MOV paradigm:', () => {
 					done();
 				});
 				it('name;', () => {
-					expect(displayCat.children[0].textContent).toBe(selectedCat.name);
+					expect(view.displayCat.children[0].textContent).toBe(view.selectedCat.name);
 				});
 				it('image;', () => {
-					expect(displayCat.children[1].outerHTML).toBe(`<img src="${selectedCat.image}" alt="${selectedCat.name}">`);
+					expect(view.displayCat.children[1].outerHTML).toBe(`<img src="${view.selectedCat.image}" alt="${view.selectedCat.name}">`);
 				});
 				it('amount of clicks.', () => {
-					expect(document.querySelector('#display-selected-section').children[1].textContent).toEqual(selectedCat.clickCount.toString());
+					expect(document.querySelector('#display-selected-section').children[1].textContent).toEqual(view.selectedCat.clickCount.toString());
 				});
 			});
 			describe('Admin button, which', () => {
