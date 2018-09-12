@@ -4,7 +4,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo test for selected cat clickCounter.
+ * @todo REFACTORE: 1) test for selected cat clickCounter: `This cat has been clicked ${}times.`; 2) pass code in the describe into the app.js file; 3) implement the last section, the form for substituting cats (name, image, and click count), in the model.
  */
 describe('creates MOV paradigm:', () => {
 	describe('Model', () => {
@@ -65,6 +65,7 @@ describe('creates MOV paradigm:', () => {
 				displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
 				for(let i = 0; i<view.catList.children.length; i++){
 					view.catList.children[i].addEventListener("click",
+						// Function to be executed once a cat name is clicked in the cat list.
 						() => {
 							// updates the cat name
 							selectedCat = model.cats[i];
@@ -84,14 +85,19 @@ describe('creates MOV paradigm:', () => {
 						});
 				};
 /*					view.catList.children[0].click();
-*/				it('name;', () => {
+*/
+				beforeEach((done) => {
+					view.catList.children[0].click();
+					done();
+				});
+				it('name;', () => {
 					expect(displayCat.children[0].textContent).toBe(selectedCat.name);
 				});
 				it('image;', () => {
 					expect(displayCat.children[1].outerHTML).toBe(`<img src="${selectedCat.image}" alt="${selectedCat.name}">`);
 				});
 				it('amount of clicks.', () => {
-					expect(document.querySelector('#display-selected-section').children[1].textContent).toEqual(selectedCat.clickCount);
+					expect(document.querySelector('#display-selected-section').children[1].textContent).toEqual(selectedCat.clickCount.toString());
 				});
 			});
 			describe('Admin button, which', () => {

@@ -21,12 +21,12 @@ let model = {
 		},
 		{
 			name: "Siren",
-			image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/42541306/1/?bust=1534964951&width=1439",
+			image: "https://i.ytimg.com/vi/SP5RYYK3LaY/hqdefault.jpg",
 			clickCount: 0
 		},
 		{
 			name: "Carbuncle",
-			image: "https://i.ytimg.com/vi/SP5RYYK3LaY/hqdefault.jpg",
+			image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/42541306/1/?bust=1534964951&width=1439",
 			clickCount: 0
 		},
 		{
@@ -37,7 +37,7 @@ let model = {
 	],
 
 	noCat: {
-		name: "Click a cat name to display it\'s data",
+		name: "Click a cat name to display it's data",
 		image: "https://mikecavaliere.com/wp-content/uploads/2015/05/Question-400x400.png",
 		clickCount: "no clicks"
 	}
