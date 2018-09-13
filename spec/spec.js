@@ -59,10 +59,21 @@ describe('creates MOV paradigm:', () => {
 			describe('if a cat name is clicked, the view displays it\'s', () => {
 /*					view.catList.children[0].click();
 */
-				beforeEach((done) => {
+				beforeAll((done) => {
 					view.catList.children[0].click();
 					done();
 				});
+
+				afterAll(() => {
+					model.cats[0].clickCount = 0;
+					view.displayCat.children[0].textContent = model.noCat.name;
+					view.displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
+					view.clickCounter.classList.remove('click-count-shown');
+					view.clickCounter.classList.add('click-count-hidden');
+
+					view.clickCounter.textContent = "";
+
+				})
 				it('name;', () => {
 					expect(view.displayCat.children[0].textContent).toBe(view.selectedCat.name);
 				});
@@ -92,6 +103,13 @@ describe('creates MOV paradigm:', () => {
 				});
 			});
 			xdescribe('Form to update each cat data by it\'s position in the cats array:', () => {
+
+				beforeEach((done) => {
+					setTimeout(() => {
+						something.click();
+					}, 5000);
+					done();
+				});
 				it('name', () => {
 					expect().to();
 				});

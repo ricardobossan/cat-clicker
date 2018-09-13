@@ -86,6 +86,7 @@ const octopus = {
 					view.clickCounter.classList.remove('click-count-hidden');
 					view.clickCounter.classList.add('click-count-shown');
 				} else {
+
 					view.clickCounter.classList.remove('click-count-shown');
 					view.clickCounter.classList.add('click-count-hidden');
 				}
