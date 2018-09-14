@@ -52,7 +52,6 @@ const octopus = {
 	init: function() {
 
 		view.init();
-		view.event();
 		view.catListNames();
 		view.displaySelectedCat();
 	},
@@ -112,8 +111,6 @@ const view = {
 		this.saveButton = document.querySelector('#saveButton');
 		this.cancelButton = document.querySelector('#saveButton');
 
-	},
-	event: function() {
 		this.adminButton.addEventListener("click", function() {
 			octopus.hideOrRevealForm();
 		});

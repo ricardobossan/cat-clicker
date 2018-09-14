@@ -102,7 +102,7 @@ describe('creates MOV paradigm:', () => {
 					expect(view.newCatForm.classList.toString()).toBe('hidden-form');
 				});
 			});
-			describe('Form to update each cat data by it\'s position in the cats array:', () => {
+			xdescribe('Form to update each cat data by it\'s position in the cats array:', () => {
 
 				beforeEach((done) => {
 					setTimeout(() => {
