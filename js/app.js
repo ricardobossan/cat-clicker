@@ -52,8 +52,7 @@ const octopus = {
 	init: function() {
 
 		view.init();
-		view.catListNames();
-		view.displaySelectedCat();
+		view.render();
 	},
 
 	hideOrRevealForm: function() {
@@ -116,17 +115,12 @@ const view = {
 		});
 	},
 
-	catListNames: () => {
+	render: () => {
 		for(let i = 0; i < view.catList.children.length; i++){
 			view.catList.children[i].textContent = octopus.sendCats().cats[i].name;
 		}
-	},
-
-	displaySelectedCat: () => {
 		octopus.displaySelected();
-
 	}
-
 };
 
 octopus.init();
