@@ -54,6 +54,7 @@ const octopus = {
 		view.init();
 		view.event();
 		view.catListNames();
+		view.displaySelectedCat();
 	},
 
 	hideOrRevealForm: function() {
@@ -108,6 +109,8 @@ const view = {
 		this.selectedCat = "";
 		this.displayCat = document.querySelector('#display-selected');
 		this.clickCounter = document.querySelector('#click-count');
+		this.saveButton = document.querySelector('#saveButton');
+		this.cancelButton = document.querySelector('#saveButton');
 
 	},
 	event: function() {
@@ -120,9 +123,13 @@ const view = {
 		for(let i = 0; i < view.catList.children.length; i++){
 			view.catList.children[i].textContent = octopus.sendCats().cats[i].name;
 		}
+	},
+
+	displaySelectedCat: () => {
+		octopus.displaySelected();
+
 	}
 
 };
 
 octopus.init();
-octopus.displaySelected();
