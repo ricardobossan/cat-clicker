@@ -64,34 +64,8 @@ const octopus = {
 	sendCats: () => {
 		let sentCats = model;
 		return sentCats;
-	},
-
-	displaySelected: function() {
-		// inside object.octopus encapsulate inside a function to be autoexecuted from the global object, after where the octopus object is defined in the code
-		view.displayCat.children[0].textContent = model.noCat.name;
-		view.displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
-		for(let i = 0; i<view.catList.children.length; i++){
-			// Callback function to be executed once a cat name is clicked in the cat list.
-			view.catList.children[i].addEventListener("click", () => {
-				// updates the cat name
-				view.selectedCat = model.cats[i];
-				view.displayCat.children[0].textContent = view.selectedCat.name;
-				// updates the cat image
-				view.displayCat.children[1].outerHTML = `<img src="${view.selectedCat.image}" alt="${view.selectedCat.name}">`;
-				// updates the clickCount for the model, so it iterates at each click on the same cat, and is properly shown on the respective view.selectedCat object
-				model.cats[i].clickCount++;
-				if (view.selectedCat.clickCount > 0) {
-					view.clickCounter.textContent = view.selectedCat.clickCount;
-					view.clickCounter.classList.remove('click-count-hidden');
-					view.clickCounter.classList.add('click-count-shown');
-				} else {
-
-					view.clickCounter.classList.remove('click-count-shown');
-					view.clickCounter.classList.add('click-count-hidden');
-				}
-			});
-		}
 	}
+
 };
 
 /**
@@ -119,7 +93,32 @@ const view = {
 		for(let i = 0; i < view.catList.children.length; i++){
 			view.catList.children[i].textContent = octopus.sendCats().cats[i].name;
 		}
-		octopus.displaySelected();
+
+		(function displaySelected() {
+			view.displayCat.children[0].textContent = octopus.sendCats().noCat.name;
+			view.displayCat.children[1].outerHTML = `<img src="${octopus.sendCats().noCat.image}" alt="${octopus.sendCats().noCat.name}">`;
+			for(let i = 0; i<view.catList.children.length; i++){
+				// Callback function to be executed once a cat name is clicked in the cat list.
+				view.catList.children[i].addEventListener("click", () => {
+					// updates the cat name
+					view.selectedCat = octopus.sendCats().cats[i];
+					view.displayCat.children[0].textContent = view.selectedCat.name;
+					// updates the cat image
+					view.displayCat.children[1].outerHTML = `<img src="${view.selectedCat.image}" alt="${view.selectedCat.name}">`;
+					// updates the clickCount for the octopus.sendCats(), so it iterates at each click on the same cat, and is properly shown on the respective view.selectedCat object
+					octopus.sendCats().cats[i].clickCount++;
+					if (view.selectedCat.clickCount > 0) {
+						view.clickCounter.textContent = view.selectedCat.clickCount;
+						view.clickCounter.classList.remove('click-count-hidden');
+						view.clickCounter.classList.add('click-count-shown');
+					} else {
+
+						view.clickCounter.classList.remove('click-count-shown');
+						view.clickCounter.classList.add('click-count-hidden');
+					}
+				});
+			}
+		})();
 	}
 };
 
