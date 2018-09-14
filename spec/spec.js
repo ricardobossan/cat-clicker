@@ -4,7 +4,7 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo REFACTORE: 1) test for selected cat clickCounter: `This cat has been clicked ${}times.`; 2) pass code in the describe into the app.js file; 3) implement the last section, the form for substituting cats (name, image, and click count), in the model.
+ * @todo implement the last section, the form for substituting cats (name, image, and click count), in the model.
  */
 describe('creates MOV paradigm:', () => {
 	describe('Model', () => {
