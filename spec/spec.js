@@ -7,6 +7,17 @@
  * @todo implement the last section, the form for substituting cats (name, image, and click count), in the model.
  */
 describe('creates MOV paradigm:', () => {
+	// resets all variables, once called:
+	const reset = () => {
+		model.cats[0].clickCount = 0;
+		view.displayCat.children[0].textContent = model.noCat.name;
+		view.displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
+		view.clickCounter.classList.remove('click-count-shown');
+		view.clickCounter.classList.add('click-count-hidden');
+
+		view.clickCounter.textContent = "";
+		view.selectedCat = '';
+	};
 	describe('Model', () => {
 		it('is a defined object.', () => {
 			expect(model).not.toBe(undefined);
@@ -64,15 +75,9 @@ describe('creates MOV paradigm:', () => {
 					done();
 				});
 
-				afterAll(() => {
-					model.cats[0].clickCount = 0;
-					view.displayCat.children[0].textContent = model.noCat.name;
-					view.displayCat.children[1].outerHTML = `<img src="${model.noCat.image}" alt="${model.noCat.name}">`;
-					view.clickCounter.classList.remove('click-count-shown');
-					view.clickCounter.classList.add('click-count-hidden');
-
-					view.clickCounter.textContent = "";
-
+				afterAll((done) => {
+					reset();
+					done();
 				})
 				it('name;', () => {
 					expect(view.displayCat.children[0].textContent).toBe(view.selectedCat.name);
@@ -85,6 +90,11 @@ describe('creates MOV paradigm:', () => {
 				});
 			});
 			describe('Admin button, which', () => {
+				afterEach((done) => {
+					view.clickCounter.classList.remove('click-count-shown');
+					view.clickCounter.classList.add('click-count-hidden');
+					done();
+				});
 				it('if not clicked, the form remains hidden;', () => {
 					expect(view.newCatForm.classList.toString()).toBe('hidden-form');
 				});
@@ -92,7 +102,8 @@ describe('creates MOV paradigm:', () => {
 					view.adminButton.click();
 					expect(view.newCatForm.classList.toString()).toBe('shown-form');
 					// returns the from back to it's original hidden form.
-					view.newCatForm.classList = "hidden-form";
+					view.adminButton.click();
+
 					expect(view.newCatForm.classList.toString()).toBe('hidden-form');
 				});
 				it('if clicked another time, hides the form again.', () => {
@@ -103,20 +114,20 @@ describe('creates MOV paradigm:', () => {
 				});
 			});
 			xdescribe('Form to update each cat data by it\'s position in the cats array:', () => {
-
-				beforeEach((done) => {
+/*
+				beforeAll((done) => {
 					setTimeout(() => {
 						document.querySelector('saveButton').click();
 					}, 5000);
 					done();
 				});
-				it('name', () => {
+*/				xit('name', () => {
 					expect().to();
 				});
-				it('image', () => {
+				xit('image', () => {
 					expect().to();
 				});
-				it('amount of clicks', () => {
+				xit('amount of clicks', () => {
 					expect().to();
 				});
 			});
