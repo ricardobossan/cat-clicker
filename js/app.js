@@ -87,6 +87,14 @@ const view = {
 		this.adminButton.addEventListener("click", function() {
 			octopus.hideOrRevealForm();
 		});
+
+		this.saveButton.addEventListener("click", function() {
+
+		});
+
+		this.cancelButton.addEventListener("click", function() {
+
+		});
 	},
 
 	render: () => {
