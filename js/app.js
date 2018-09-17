@@ -12,27 +12,32 @@ let model = {
 		{
 			name: "Ifrit",
 			image: "https://morawscy-vet.pl/wp-content/uploads/2018/07/yellow_tiger_cat.jpg",
-			clickCount: 0
+			clickCount: 0,
+			position: 0
 		},
 		{
 			name: "Shiva",
 			image: "https://vignette.wikia.nocookie.net/animal-jam-clans-stories/images/b/b8/Ice-cat-cats-31471539-1600-1200.jpg/revision/latest?cb=20160614065319",
-			clickCount: 0
+			clickCount: 0,
+			position: 1
 		},
 		{
 			name: "Siren",
 			image: "https://i.ytimg.com/vi/SP5RYYK3LaY/hqdefault.jpg",
-			clickCount: 0
+			clickCount: 0,
+			position: 2
 		},
 		{
 			name: "Carbuncle",
 			image: "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/42541306/1/?bust=1534964951&width=1439",
-			clickCount: 0
+			clickCount: 0,
+			position: 3
 		},
 		{
 			name: "Bahamut",
 			image: "http://catobsessed.com/wp-content/uploads/2017/07/my-cat-in-dragon-costume.jpg",
-			clickCount: 0
+			clickCount: 0,
+			position: 4
 		}
 	],
 
@@ -61,8 +66,19 @@ const octopus = {
 		view.newCatForm.classList.toggle('shown-form');
 	},
 
+	/**
+	 * checks if data is in local storage or in the code, then sends it to the view
+	 * @method
+	 */
 	sendCats: () => {
-		let sentCats = model;
+		let sentCats;
+		if (!localStorage.newModel) {
+			sentCats = model;
+			localStorage.newmModel;
+		}
+		else {
+			sentCats = JSON.parse(localStorage.getItem("newModel"));
+		}
 		return sentCats;
 	}
 
@@ -78,7 +94,7 @@ const view = {
 		this.catList = document.querySelector('.cat-list');
 		this.adminButton = document.querySelector('#admin');
 		this.newCatForm = document.querySelector('#new-cat-form');
-		this.selectedCat = "";
+		this.selectedCat;
 		this.displayCat = document.querySelector('#display-selected');
 		this.clickCounter = document.querySelector('#click-count');
 		this.saveButton = document.querySelector('#saveButton');
@@ -89,7 +105,17 @@ const view = {
 		});
 
 		this.saveButton.addEventListener("click", function() {
-
+			if(typeof view.selectedCat !== "object"){
+				alert("Click on a cat first");
+			} else {
+				(function sendToLocalStorage() {
+					let i = view.selectedCat.position;
+					let updatedModel = octopus.sendCats();
+					alert(updatedModel.cats[i].clickCount);
+					updatedModel.cats[i] = view.selectedCat;
+					localStorage.setItem('newModel', JSON.stringify(updatedModel));
+				})();
+			}
 		});
 
 		this.cancelButton.addEventListener("click", function() {
