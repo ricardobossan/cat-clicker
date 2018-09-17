@@ -4,7 +4,9 @@
  *
  * @author Ricardo Bossan <ricardobossan@gmail.com>
  *
- * @todo implement the last section, the form for substituting cats (name, image, and click count), in the model.
+ * @todo
+ * how to first declare a localStorage.newModel object;
+ * implement the last section, the form for substituting cats (name, image, and click count), in the model.
  */
 describe('creates MOV paradigm:', () => {
 	// resets all variables, once called:
@@ -32,7 +34,8 @@ describe('creates MOV paradigm:', () => {
 		});
 		describe('Provides the model data ', () => {
 			it('to the view object:', () => {
-				expect(octopus.sendCats()).toEqual(model);
+				let modelOfLocalStorage = localStorage.getItem("newModel") === null ? model : JSON.parse(localStorage.getItem("newModel"));
+				expect(octopus.sendCats()).toEqual(modelOfLocalStorage);
 			});
 		});
 	});
@@ -114,22 +117,22 @@ describe('creates MOV paradigm:', () => {
 				});
 			});
 			xdescribe('Form to update each cat data by it\'s position in the cats array:', () => {
-/*
-				beforeAll((done) => {
-					setTimeout(() => {
-						document.querySelector('saveButton').click();
-					}, 5000);
-					done();
-				});
-*/				xit('name', () => {
-					expect().to();
-				});
-				xit('image', () => {
-					expect().to();
-				});
-				xit('amount of clicks', () => {
-					expect().to();
-				});
+				xdescribe('either', () => {
+/*					beforeAll((done) => {
+						view.catList.children[0].click();
+						saveButton.click();
+						done();
+						}
+					);
+					afterAll((done) => {
+						reset();
+						done();
+						}
+					);
+*/					xit('localStorage is set, or  ', () => {
+						expect(JSON.parse(localStorage.getItem("newModel"))).not.toBe(undefined);
+					});
+				})
 			});
 		});
 	});
