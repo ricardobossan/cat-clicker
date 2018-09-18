@@ -74,7 +74,6 @@ const octopus = {
 		let sentCats;
 		if (!localStorage.newModel) {
 			sentCats = model;
-			localStorage.newmModel;
 		}
 		else {
 			sentCats = JSON.parse(localStorage.getItem("newModel"));
@@ -99,22 +98,57 @@ const view = {
 		this.clickCounter = document.querySelector('#click-count');
 		this.saveButton = document.querySelector('#saveButton');
 		this.cancelButton = document.querySelector('#saveButton');
+		this.updatedCats;
 
 		this.adminButton.addEventListener("click", function() {
 			octopus.hideOrRevealForm();
 		});
 
-		this.saveButton.addEventListener("click", function() {
+		this.saveButton.addEventListener("click", function(evt) {
 			if(typeof view.selectedCat !== "object"){
+				evt.preventDefault();
 				alert("Click on a cat first");
 			} else {
-				(function sendToLocalStorage() {
-					let i = view.selectedCat.position;
-					let updatedModel = octopus.sendCats();
-					alert(updatedModel.cats[i].clickCount);
-					updatedModel.cats[i] = view.selectedCat;
-					localStorage.setItem('newModel', JSON.stringify(updatedModel));
-				})();
+				evt.preventDefault();
+				let catForm = document.querySelector('#new-cat-form');
+				if(	(catForm[0].value === "" && catForm[1].value === "") ||
+					(catForm[0].value !== "" && catForm[1].value === "") ||
+					(catForm[0].value === "" && catForm[1].value !== "") )
+				{
+					evt.preventDefault();
+					alert("Please, fill all the new cat fields");
+				} else{
+					(function sendToLocalStorage() {
+						let i = view.selectedCat.position;
+						let updatedData = octopus.sendCats();
+						updatedData.cats[i].name = catForm[0].value;
+						updatedData.cats[i].image = catForm[1].value;
+						catForm[2].value > 0 ? updatedData.cats[i].clickCount = catForm[2].value : updatedData.cats[i].clickCount = 0;
+
+						localStorage.setItem('newModel', JSON.stringify(updatedData));
+
+						for(let i = 0; i < view.catList.children.length; i++){
+							view.catList.children[i].textContent = octopus.sendCats().cats[i].name;
+						}
+
+						// Displays the new cat's data on the screen
+						view.selectedCat = octopus.sendCats().cats[i];
+						view.displayCat.children[0].textContent = view.selectedCat.name;
+						view.displayCat.children[1].outerHTML = `<img src="${view.selectedCat.image}" alt="${view.selectedCat.name}">`;
+						view.clickCounter.textContent = updatedData.cats[i].clickCount;
+
+
+						// Hides the form and resets it's inputs values
+						(() => {
+							for (let l = 0; l < 3; l++) {
+								catForm[l].value = "";
+							}
+							view.newCatForm.classList.add('hidden-form');
+							view.newCatForm.classList.remove('shown-form');
+
+						})();
+					})();
+				}
 			}
 		});
 
@@ -134,19 +168,20 @@ const view = {
 			for(let i = 0; i<view.catList.children.length; i++){
 				// Callback function to be executed once a cat name is clicked in the cat list.
 				view.catList.children[i].addEventListener("click", () => {
-					// updates the cat name
 					view.selectedCat = octopus.sendCats().cats[i];
+					// updates the cat name
 					view.displayCat.children[0].textContent = view.selectedCat.name;
 					// updates the cat image
 					view.displayCat.children[1].outerHTML = `<img src="${view.selectedCat.image}" alt="${view.selectedCat.name}">`;
 					// updates the clickCount for the octopus.sendCats(), so it iterates at each click on the same cat, and is properly shown on the respective view.selectedCat object
-					octopus.sendCats().cats[i].clickCount++;
+					view.updatedCats = octopus.sendCats();
+					view.updatedCats.cats[i].clickCount++;
+					localStorage.setItem('newModel', JSON.stringify(view.updatedCats));
+					view.clickCounter.textContent = view.selectedCat.clickCount;
 					if (view.selectedCat.clickCount > 0) {
-						view.clickCounter.textContent = view.selectedCat.clickCount;
 						view.clickCounter.classList.remove('click-count-hidden');
 						view.clickCounter.classList.add('click-count-shown');
 					} else {
-
 						view.clickCounter.classList.remove('click-count-shown');
 						view.clickCounter.classList.add('click-count-hidden');
 					}
