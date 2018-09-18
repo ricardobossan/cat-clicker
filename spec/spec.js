@@ -34,6 +34,7 @@ describe('creates MOV paradigm:', () => {
 		});
 		describe('Provides the model data ', () => {
 			it('to the view object:', () => {
+				// Matcher for model or local storage
 				let modelOfLocalStorage = localStorage.getItem("newModel") === null ? model : JSON.parse(localStorage.getItem("newModel"));
 				expect(octopus.sendCats()).toEqual(modelOfLocalStorage);
 			});
