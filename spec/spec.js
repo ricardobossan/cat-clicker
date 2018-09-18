@@ -47,30 +47,31 @@ describe('creates MOV paradigm:', () => {
 		});
 		describe('displays the cat data into the apropriate markup fields:', () => {
 			describe('List of cats names', () => {
-				// Waits for DOM to load
-/*				setTimeout(() => {
-*/					it('name', () => {
-					expect(octopus.sendCats().cats[0].name).toBe("Ifrit");
+				let listOfCatNames = [];
+				for( let k = 0; k < 5; k++) {
+					listOfCatNames.push(octopus.sendCats().cats[k].name);
+				}
+				it('name', () => {
+					expect(octopus.sendCats().cats[0].name).toBe(listOfCatNames[0]);
 					expect(view.catList.children[0].textContent).toEqual(octopus.sendCats().cats[0].name);
 				});
 				it('name', () => {
-					expect(octopus.sendCats().cats[1].name).toBe("Shiva");
+					expect(octopus.sendCats().cats[1].name).toBe(listOfCatNames[1]);
 					expect(view.catList.children[1].textContent).toEqual(octopus.sendCats().cats[1].name);
 				});
 				it('name', () => {
-					expect(octopus.sendCats().cats[2].name).toBe("Siren");
+					expect(octopus.sendCats().cats[2].name).toBe(listOfCatNames[2]);
 					expect(view.catList.children[2].textContent).toEqual(octopus.sendCats().cats[2].name);
 				});
 				it('name', () => {
-					expect(octopus.sendCats().cats[3].name).toBe("Carbuncle");
+					expect(octopus.sendCats().cats[3].name).toBe(listOfCatNames[3]);
 					expect(view.catList.children[3].textContent).toEqual(octopus.sendCats().cats[3].name);
 				});
 				it('name', () => {
-					expect(octopus.sendCats().cats[4].name).toBe("Bahamut");
+					expect(octopus.sendCats().cats[4].name).toBe(listOfCatNames[4]);
 					expect(view.catList.children[4].textContent).toEqual(octopus.sendCats().cats[4].name);
 				});
-/*				}, 500);
-*/			});
+			});
 			describe('if a cat name is clicked, the view displays it\'s', () => {
 /*					view.catList.children[0].click();
 */
@@ -116,24 +117,6 @@ describe('creates MOV paradigm:', () => {
 					view.adminButton.click();
 					expect(view.newCatForm.classList.toString()).toBe('hidden-form');
 				});
-			});
-			xdescribe('Form to update each cat data by it\'s position in the cats array:', () => {
-				xdescribe('either', () => {
-/*					beforeAll((done) => {
-						view.catList.children[0].click();
-						saveButton.click();
-						done();
-						}
-					);
-					afterAll((done) => {
-						reset();
-						done();
-						}
-					);
-*/					xit('localStorage is set, or  ', () => {
-						expect(JSON.parse(localStorage.getItem("newModel"))).not.toBe(undefined);
-					});
-				})
 			});
 		});
 	});
