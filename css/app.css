@@ -1,6 +1,32 @@
+main {
+	max-width: 720px;
+	margin: 0 auto;
+}
+
+figcaption {
+	text-align: center;
+}
+
 img {
+	margin: 0 auto;
 	max-width: 80%;
-	max-height: 70vh;
+	max-height: 300px;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	margin: 0 20%;
+}
+
+#display-selected {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+#admin, #click-count {
+	margin: 0 20%;
 }
 
 .click-count-hidden {
@@ -22,5 +48,7 @@ img {
 .cat-list {
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	list-style: none;
+
 }
