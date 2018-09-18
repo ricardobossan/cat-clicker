@@ -18,7 +18,7 @@
 <body>
     <main>
     <section>
-      <div class="cat-list">
+      <div id="cat-list" class="cat-list">
           <button>Cat1 Name</button>
           <button>Cat2 Name</button>
           <button>Cat3 Name</button>
@@ -41,8 +41,10 @@
         <input id="POST-name" type="text">
         <label for="POST-name">New Cat image URL: </label>
         <input id="POST-name" type="url" name>
+        <label for="POST-name">New Cat number of clicks: </label>
+        <input id="POST-name" type="number" name>
         <br>
-        <button id="saveButton">Save</button>
+        <input id="saveButton" type="submit" value="Save">
         <!-- click() it makes the form hidden again. classList.toggle('shown-form hidden-form') -->
         <button id="cancelButton">Cancel</button>
       </form>
