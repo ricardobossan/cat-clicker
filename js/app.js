@@ -67,7 +67,7 @@ const octopus = {
 	},
 
 	/**
-	 * checks if data is in local storage or in the code, then sends it to the view
+	 * checks if data is in the model object or in local storage, then sends it to the view
 	 * @method
 	 */
 	sendCats: () => {
@@ -90,6 +90,8 @@ const octopus = {
 const view = {
 
 	init: function() {
+
+		// Set variables
 		this.catList = document.querySelector('.cat-list');
 		this.adminButton = document.querySelector('#admin');
 		this.newCatForm = document.querySelector('#new-cat-form');
@@ -104,6 +106,7 @@ const view = {
 			octopus.hideOrRevealForm();
 		});
 
+		// Form's logic
 		this.saveButton.addEventListener("click", function(evt) {
 			if(typeof view.selectedCat !== "object"){
 				evt.preventDefault();
@@ -117,7 +120,8 @@ const view = {
 				{
 					evt.preventDefault();
 					alert("Please, fill all the new cat fields");
-				} else{
+				} else {
+					// Saves form's input data to localStorage
 					(function sendToLocalStorage() {
 						let i = view.selectedCat.position;
 						let updatedData = octopus.sendCats();
@@ -150,10 +154,6 @@ const view = {
 					})();
 				}
 			}
-		});
-
-		this.cancelButton.addEventListener("click", function() {
-
 		});
 	},
 
