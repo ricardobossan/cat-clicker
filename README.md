@@ -3,7 +3,7 @@
 
 ## How to Run the App
 
-Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received.
+Click on a picture of a cat to display it on the right panel, along with the cat's name and the number of clicks it received. Click on the admin button, to change the selected cat's name, image and number of clicks at your leisure. Your changes will be saved on local storage, so you keep your changes even after you close the browser.
 
 ## Important notes on buidling this app.
 
