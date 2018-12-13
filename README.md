@@ -1,5 +1,10 @@
 # Project: Cat Clicker Premium
 
+![App View][14]
+
+## Credits and Acknowledgement
+
+[Cat pics][13]
 
 ## How to Run the App
 
@@ -366,3 +371,5 @@ $ gulp jsdoc
 [10]: https://browsersync.io/ "Browsersync (Global)"
 [11]: http://usejsdoc.org/index.html#block-tags "Jsdoc Block Tags"
 [12]: https://www.npmjs.com/package/gulp-jsdoc3 "gulp-jsdoc"
+[13]:http://quotationsquotes.com/2015/10/03/top-30-funny-cat-picture-quotes/
+[14]:/app.png
