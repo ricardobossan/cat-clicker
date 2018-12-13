@@ -177,7 +177,7 @@ const view = {
 					view.updatedCats = octopus.sendCats();
 					view.updatedCats.cats[i].clickCount++;
 					localStorage.setItem('newModel', JSON.stringify(view.updatedCats));
-					view.clickCounter.textContent = view.selectedCat.clickCount;
+					view.clickCounter.textContent = `Number of clicks: ${view.selectedCat.clickCount}`;
 					if (view.selectedCat.clickCount > 0) {
 						view.clickCounter.classList.remove('click-count-hidden');
 						view.clickCounter.classList.add('click-count-shown');
